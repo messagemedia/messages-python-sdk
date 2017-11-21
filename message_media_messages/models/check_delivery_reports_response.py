@@ -3,7 +3,6 @@
 """
     message_media_messages.models.check_delivery_reports_response
 
-    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io )
 """
 
 

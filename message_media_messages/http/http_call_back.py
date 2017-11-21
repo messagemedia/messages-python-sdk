@@ -3,7 +3,6 @@
 """
     message_media_messages.http.http_call_back
 
-    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 
 class HttpCallBack(object):

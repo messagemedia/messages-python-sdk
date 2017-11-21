@@ -3,7 +3,6 @@
 """
     tests.http_response_catcher
 
-    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 
 from message_media_messages.http.http_call_back import HttpCallBack

@@ -3,7 +3,6 @@
 """
     tests.controllers.test_replies_controller
 
-    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 
 import jsonpickle

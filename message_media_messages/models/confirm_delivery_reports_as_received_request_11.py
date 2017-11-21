@@ -3,7 +3,6 @@
 """
     message_media_messages.models.confirm_delivery_reports_as_received_request_11
 
-    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io )
 """
 
 

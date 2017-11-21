@@ -3,7 +3,6 @@
 """
     message_media_messages.message_media_messages_client
 
-    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 from .decorators import lazy_property
 from .configuration import Configuration

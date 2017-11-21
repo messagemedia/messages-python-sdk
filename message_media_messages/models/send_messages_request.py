@@ -3,7 +3,6 @@
 """
     message_media_messages.models.send_messages_request
 
-    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io )
 """
 
 
