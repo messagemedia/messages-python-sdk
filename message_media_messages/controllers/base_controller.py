@@ -32,7 +32,7 @@ class BaseController(object):
     http_call_back = None
 
     global_headers = {
-        'user-agent': 'messagemedia-messages'
+        'user-agent': 'messagemedia-messages-python-sdk-1.0.0'
     }
 
     def __init__(self, client=None, call_back=None):
