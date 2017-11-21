@@ -8,13 +8,15 @@ except(IOError, ImportError):
     long_description = open('README.md').read()
 
 setup(
-    name='message_media_messages',
+    name='messagemedia_messages_sdk',
     version='1.0.0',
     description='The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.',
     long_description=long_description,
-    author='APIMatic SDK Generator',
-    author_email='support@apimatic.io',
-    url='https://apimatic.io/',
+    author='MessageMedia Developers',
+    author_email='developers@messagemedia.com',
+    url='https://developers.messagemedia.com/',
+    download_url='https://github.com/messagemedia/messages-python-sdk',
+    license='Apache License 2.0'
     packages=find_packages(),
     install_requires=[
         'requests>=2.9.1, <3.0',
