@@ -16,7 +16,7 @@ setup(
     author_email='developers@messagemedia.com',
     url='https://developers.messagemedia.com/',
     download_url='https://github.com/messagemedia/messages-python-sdk',
-    license='Apache License 2.0'
+    license='Apache License 2.0',
     packages=find_packages(),
     install_requires=[
         'requests>=2.9.1, <3.0',
