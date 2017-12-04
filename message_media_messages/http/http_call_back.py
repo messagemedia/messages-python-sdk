@@ -5,6 +5,7 @@
 
 """
 
+
 class HttpCallBack(object):
 
     """An interface for  the callback to be called before and after the

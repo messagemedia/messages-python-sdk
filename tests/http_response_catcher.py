@@ -7,6 +7,7 @@
 
 from message_media_messages.http.http_call_back import HttpCallBack
 
+
 class HttpResponseCatcher(HttpCallBack):
 
     """A class used for catching the HttpResponse object from controllers.
@@ -17,10 +18,7 @@ class HttpResponseCatcher(HttpCallBack):
 
     """
     def on_before_request(self, request):
-        pass;
+        pass
 
     def on_after_response(self, context):
         self.response = context.response
-
-
-

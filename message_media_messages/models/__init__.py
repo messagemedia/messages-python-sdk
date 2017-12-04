@@ -7,5 +7,5 @@ __all__ = [
     'send_messages_response',
     'send_messages_request',
     'confirm_delivery_reports_as_received_request',
-    'confirm_delivery_reports_as_received_request_11',
+    'confirm_delivery_reports_as_received_request_11'
 ]

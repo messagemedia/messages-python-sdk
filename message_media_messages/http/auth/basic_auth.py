@@ -8,7 +8,11 @@
 import base64
 from ...configuration import Configuration
 
+
 class BasicAuth:
+
+    def __init__(self):
+        pass
 
     @staticmethod
     def apply(http_request):

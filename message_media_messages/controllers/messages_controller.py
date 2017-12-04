@@ -9,9 +9,9 @@ import logging
 from .base_controller import BaseController
 from ..api_helper import APIHelper
 from ..configuration import Configuration
-from ..http.auth.basic_auth import BasicAuth
 from ..models.send_messages_response import SendMessagesResponse
 from ..exceptions.api_exception import APIException
+
 
 class MessagesController(BaseController):
 
@@ -23,7 +23,8 @@ class MessagesController(BaseController):
 
     def update_cancel_scheduled_message(self,
                                         message_id,
-                                        body):
+                                        body,
+                                        account_header=None):
         """Does a PUT request to /v1/messages/{messageId}.
 
         Cancel a scheduled message that has not yet been delivered.
@@ -48,9 +49,9 @@ class MessagesController(BaseController):
         returned*
 
         Args:
-            message_id (string): TODO: type description here. Example: 
+            message_id (string): TODO: type description here.
             body (CancelScheduledMessageRequest): TODO: type description here.
-                Example: 
+            account_header:  TODO: type description here.
 
         Returns:
             mixed: Response from the API. 
@@ -67,8 +68,9 @@ class MessagesController(BaseController):
     
             # Prepare query URL
             self.logger.info('Preparing query URL for update_cancel_scheduled_message.')
+            url = '/v1/messages/{messageId}'
             _query_builder = Configuration.base_uri
-            _query_builder += '/v1/messages/{messageId}'
+            _query_builder += url
             _query_builder = APIHelper.append_url_with_template_parameters(_query_builder, { 
                 'messageId': message_id
             })
@@ -80,12 +82,15 @@ class MessagesController(BaseController):
                 'accept': 'application/json',
                 'content-type': 'application/json; charset=utf-8'
             }
-    
+
+            self.add_account_header(_headers, account_header)
+
             # Prepare and execute request
             self.logger.info('Preparing and executing request for update_cancel_scheduled_message.')
-            _request = self.http_client.put(_query_url, headers=_headers, parameters=APIHelper.json_serialize(body))
-            BasicAuth.apply(_request)
-            _context = self.execute_request(_request, name = 'update_cancel_scheduled_message')
+            json_body = APIHelper.json_serialize(body)
+            _request = self.http_client.post(_query_url, headers=_headers, parameters=json_body)
+            self.apply_authentication(_request, url, json_body)
+            _context = self.execute_request(_request, name='update_cancel_scheduled_message')
 
             # Endpoint and global error handling using HTTP status codes.
             self.logger.info('Validating response for update_cancel_scheduled_message.')
@@ -99,11 +104,12 @@ class MessagesController(BaseController):
             return APIHelper.json_deserialize(_context.response.raw_body)
 
         except Exception as e:
-            self.logger.error(e, exc_info = True)
+            self.logger.error(e, exc_info=True)
             raise
 
     def get_message_status(self,
-                           message_id):
+                           message_id,
+                           account_header=None):
         """Does a GET request to /v1/messages/{messageId}.
 
         Retrieve the current status of a message using the message ID returned
@@ -139,6 +145,8 @@ class MessagesController(BaseController):
 
         Args:
             message_id (string): TODO: type description here. Example: 
+            account_header:  TODO: type description
+                here. Example:
 
         Returns:
             mixed: Response from the API. 
@@ -155,8 +163,9 @@ class MessagesController(BaseController):
     
             # Prepare query URL
             self.logger.info('Preparing query URL for get_message_status.')
+            url = '/v1/messages/{messageId}'
             _query_builder = Configuration.base_uri
-            _query_builder += '/v1/messages/{messageId}'
+            _query_builder += url
             _query_builder = APIHelper.append_url_with_template_parameters(_query_builder, { 
                 'messageId': message_id
             })
@@ -167,12 +176,14 @@ class MessagesController(BaseController):
             _headers = {
                 'accept': 'application/json'
             }
-    
+
+            self.add_account_header(_headers, account_header)
+
             # Prepare and execute request
             self.logger.info('Preparing and executing request for get_message_status.')
             _request = self.http_client.get(_query_url, headers=_headers)
-            BasicAuth.apply(_request)
-            _context = self.execute_request(_request, name = 'get_message_status')
+            self.apply_authentication(_request, url)
+            _context = self.execute_request(_request, name='get_message_status')
 
             # Endpoint and global error handling using HTTP status codes.
             self.logger.info('Validating response for get_message_status.')
@@ -184,11 +195,12 @@ class MessagesController(BaseController):
             return APIHelper.json_deserialize(_context.response.raw_body)
 
         except Exception as e:
-            self.logger.error(e, exc_info = True)
+            self.logger.error(e, exc_info=True)
             raise
 
     def create_send_messages(self,
-                             body):
+                             body,
+                             account_header=None):
         """Does a POST request to /v1/messages.
 
         Submit one or more (up to 100 per request) SMS or text to voice
@@ -300,7 +312,9 @@ class MessagesController(BaseController):
 
         Args:
             body (SendMessagesRequest): TODO: type description here. Example:
-                
+            account_header:  TODO: type description
+                here. Example:
+
         Returns:
             SendMessagesResponse: Response from the API. 
 
@@ -316,8 +330,9 @@ class MessagesController(BaseController):
     
             # Prepare query URL
             self.logger.info('Preparing query URL for create_send_messages.')
+            url = '/v1/messages'
             _query_builder = Configuration.base_uri
-            _query_builder += '/v1/messages'
+            _query_builder += url
             _query_url = APIHelper.clean_url(_query_builder)
     
             # Prepare headers
@@ -326,12 +341,15 @@ class MessagesController(BaseController):
                 'accept': 'application/json',
                 'content-type': 'application/json; charset=utf-8'
             }
-    
+
+            self.add_account_header(_headers, account_header)
+
             # Prepare and execute request
             self.logger.info('Preparing and executing request for create_send_messages.')
-            _request = self.http_client.post(_query_url, headers=_headers, parameters=APIHelper.json_serialize(body))
-            BasicAuth.apply(_request)
-            _context = self.execute_request(_request, name = 'create_send_messages')
+            json_body = APIHelper.json_serialize(body)
+            _request = self.http_client.post(_query_url, headers=_headers, parameters=json_body)
+            self.apply_authentication(_request, url, json_body)
+            _context = self.execute_request(_request, name='create_send_messages')
 
             # Endpoint and global error handling using HTTP status codes.
             self.logger.info('Validating response for create_send_messages.')
@@ -343,5 +361,5 @@ class MessagesController(BaseController):
             return APIHelper.json_deserialize(_context.response.raw_body, SendMessagesResponse.from_dictionary)
 
         except Exception as e:
-            self.logger.error(e, exc_info = True)
+            self.logger.error(e, exc_info=True)
             raise

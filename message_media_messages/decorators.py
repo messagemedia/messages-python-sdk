@@ -5,9 +5,12 @@
 
 """
 
-class lazy_property(object):
 
-    """A decorator class for lazy instantiation."""
+class LazyProperty(object):
+
+    """
+    A decorator class for lazy instantiation.
+    """
 
     def __init__(self, fget):
         self.fget = fget

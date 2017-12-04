@@ -1,3 +1,3 @@
 __all__ = [
-    'api_exception',
+    'api_exception'
 ]

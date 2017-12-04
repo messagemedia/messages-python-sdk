@@ -19,7 +19,7 @@ class CheckDeliveryReportsResponse(object):
 
     # Create a mapping from Model property names to API property names
     _names = {
-        "delivery_reports" : "delivery_reports"
+        "delivery_reports": "delivery_reports"
     }
 
     def __init__(self,
@@ -28,7 +28,6 @@ class CheckDeliveryReportsResponse(object):
 
         # Initialize members of the class
         self.delivery_reports = delivery_reports
-
 
     @classmethod
     def from_dictionary(cls,
@@ -52,5 +51,3 @@ class CheckDeliveryReportsResponse(object):
 
         # Return an object of this model
         return cls(delivery_reports)
-
-
