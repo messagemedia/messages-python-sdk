@@ -23,10 +23,8 @@ class ControllerTestBase(unittest.TestCase):
         cls.request_timeout = 30
         cls.assert_precision = 0.01
 
-        # Configuration.basic_auth_user_name = os.environ['MessageMediaApiTestsKey']
-        # Configuration.basic_auth_password = os.environ['MessageMediaApiTestsSecret']
-        Configuration.basic_auth_user_name = "iAotxWgVXGRZtSTqRdsc"
-        Configuration.basic_auth_password = "snooHioU0HZorNVlBTR07kBAOZ7kz6"
+        Configuration.basic_auth_user_name = os.environ['MessageMediaApiTestsKey']
+        Configuration.basic_auth_password = os.environ['MessageMediaApiTestsSecret']
 
     def setUp(self):
         # Method called once before every test in a test class.
