@@ -1,4 +1,6 @@
-# MessageMedia.SDK.Messages Python SDK [![Travis Build Status](https://api.travis-ci.org/messagemedia/messages-python-sdk.svg?branch=master)](https://travis-ci.org/messagemedia/messages-python-sdk)
+# MessageMedia.SDK.Messages Python SDK
+[![Travis Build Status](https://api.travis-ci.org/messagemedia/messages-python-sdk.svg?branch=master)](https://travis-ci.org/messagemedia/messages-python-sdk)
+
 The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.
 
 ## Getting started
