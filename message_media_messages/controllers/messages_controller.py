@@ -69,11 +69,11 @@ class MessagesController(BaseController):
             # Prepare query URL
             self.logger.info('Preparing query URL for update_cancel_scheduled_message.')
             url = '/v1/messages/{messageId}'
-            _query_builder = Configuration.base_uri
-            _query_builder += url
-            _query_builder = APIHelper.append_url_with_template_parameters(_query_builder, { 
+            url = APIHelper.append_url_with_template_parameters(url, {
                 'messageId': message_id
             })
+            _query_builder = Configuration.base_uri
+            _query_builder += url
             _query_url = APIHelper.clean_url(_query_builder)
     
             # Prepare headers
@@ -164,11 +164,12 @@ class MessagesController(BaseController):
             # Prepare query URL
             self.logger.info('Preparing query URL for get_message_status.')
             url = '/v1/messages/{messageId}'
-            _query_builder = Configuration.base_uri
-            _query_builder += url
-            _query_builder = APIHelper.append_url_with_template_parameters(_query_builder, { 
+            url = APIHelper.append_url_with_template_parameters(url, {
                 'messageId': message_id
             })
+
+            _query_builder = Configuration.base_uri
+            _query_builder += url
             _query_url = APIHelper.clean_url(_query_builder)
     
             # Prepare headers
