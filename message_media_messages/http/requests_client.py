@@ -16,9 +16,11 @@ from .http_client import HttpClient
 from .http_response import HttpResponse
 from .http_method_enum import HttpMethodEnum
 
+
 class RequestsClient(HttpClient):
 
-    """An implementation of HttpClient that uses Requests as its HTTP Client
+    """
+    An implementation of HttpClient that uses Requests as its HTTP Client
 
     Attributes:
         timeout (int): The default timeout for all API requests.
@@ -26,7 +28,8 @@ class RequestsClient(HttpClient):
     """
 
     def __init__(self, timeout=60, cache=False, max_retries=None, retry_interval=None):
-        """The constructor.
+        """
+        The constructor.
 
         Args:
             timeout (float): The default global timeout(seconds).
@@ -44,10 +47,11 @@ class RequestsClient(HttpClient):
             self.session = CacheControl(self.session)
 
     def execute_as_string(self, request):
-        """Execute a given HttpRequest to get a string response back
+        """
+        Execute a given HttpRequest to get a string response back
 
         Args:
-            request (HttpRequest): The given HttpRequest to execute.
+            request: The given HttpRequest to execute.
 
         Returns:
             HttpResponse: The response of the HttpRequest.
@@ -64,10 +68,11 @@ class RequestsClient(HttpClient):
         return self.convert_response(response, False)
 
     def execute_as_binary(self, request):
-        """Execute a given HttpRequest to get a binary response back
+        """
+        Execute a given HttpRequest to get a binary response back
 
         Args:
-            request (HttpRequest): The given HttpRequest to execute.
+            request: The given HttpRequest to execute.
 
         Returns:
             HttpResponse: The response of the HttpRequest.
@@ -84,11 +89,13 @@ class RequestsClient(HttpClient):
         return self.convert_response(response, True)
 
     def convert_response(self, response, binary):
-        """Converts the Response object of the HttpClient into an
+        """
+        Converts the Response object of the HttpClient into an
         HttpResponse object.
 
         Args:
-            response (dynamic): The original response object.
+            response: The original response object.
+            binary: Flag if the response is binary or not.
 
         Returns:
             HttpResponse: The converted HttpResponse object.

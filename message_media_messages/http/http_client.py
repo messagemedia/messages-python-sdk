@@ -8,6 +8,7 @@
 from .http_request import HttpRequest
 from .http_method_enum import HttpMethodEnum
 
+
 class HttpClient(object):
 
     """An interface for the methods that an HTTP Client must implement

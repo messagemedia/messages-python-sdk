@@ -9,8 +9,9 @@ except(IOError, ImportError):
 
 setup(
     name='messagemedia_messages_sdk',
-    version='1.0.0',
-    description='The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.',
+    version='1.1.0',
+    description='The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging '
+                'applications.',
     long_description=long_description,
     author='MessageMedia Developers',
     author_email='developers@messagemedia.com',
@@ -27,5 +28,5 @@ setup(
     tests_require=[
         'nose>=1.3.7'
     ],
-    test_suite = 'nose.collector'
+    test_suite='nose.collector'
 )

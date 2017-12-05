@@ -15,9 +15,10 @@ import jsonpickle
 import dateutil.parser
 from requests.utils import quote
 
-class APIHelper(object):
 
-    """A Helper Class for various functions associated with API Calls.
+class APIHelper(object):
+    """
+    A Helper Class for various functions associated with API Calls.
 
     This class contains static methods for operations that need to be
     performed during API requests. All of the methods inside this class are
@@ -28,7 +29,8 @@ class APIHelper(object):
 
     @staticmethod
     def merge_dicts(dict1, dict2):
-        """Merges two dictionaries into one as a shallow copy.
+        """
+        Merges two dictionaries into one as a shallow copy.
 
         Args:
             dict1 (dict): The first dictionary.
@@ -47,7 +49,8 @@ class APIHelper(object):
 
     @staticmethod
     def json_serialize(obj):
-        """JSON Serialization of a given object.
+        """
+        JSON Serialization of a given object.
 
         Args:
             obj (object): The object to serialise.
@@ -76,7 +79,8 @@ class APIHelper(object):
 
     @staticmethod
     def json_deserialize(json, unboxing_function=None):
-        """JSON Deerialization of a given string.
+        """
+        JSON Deserialization of a given string.
 
         Args:
             json (str): The JSON serialized string to deserialize.
@@ -84,6 +88,8 @@ class APIHelper(object):
         Returns:
             dict: A dictionary representing the data contained in the
                 JSON serialized string.
+                :param json:
+                :param unboxing_function:
 
         """
         if json is None:
@@ -103,7 +109,8 @@ class APIHelper(object):
 
     @staticmethod
     def serialize_array(key, array, formatting="indexed"):
-        """Converts an array parameter to a list of key value tuples.
+        """
+        Converts an array parameter to a list of key value tuples.
 
         Args:
             key (str): The name of the parameter.
@@ -130,7 +137,8 @@ class APIHelper(object):
     @staticmethod
     def append_url_with_template_parameters(url,
                                             parameters):
-        """Replaces template parameters in the given url.
+        """
+        Replaces template parameters in the given url.
 
         Args:
             url (str): The query url string to replace the template parameters.
@@ -152,9 +160,7 @@ class APIHelper(object):
             replace_value = ""
 
             # Load parameter value
-            if element is None:
-                replace_value = ""
-            elif isinstance(element, list):
+            if isinstance(element, list):
                 replace_value = "/".join(quote(str(x), safe='') for x in element)
             else:
                 replace_value = quote(str(element), safe='')
@@ -167,7 +173,8 @@ class APIHelper(object):
     def append_url_with_query_parameters(url,
                                          parameters,
                                          array_serialization="indexed"):
-        """Adds query parameters to a URL.
+        """
+        Adds query parameters to a URL.
 
         Args:
             url (str): The URL string.
@@ -185,31 +192,33 @@ class APIHelper(object):
             return url
 
         for key, value in parameters.items():
-            seperator = '&' if '?' in url else '?'
-            if not value is None:
+            separator = '&' if '?' in url else '?'
+            if value is not None:
                 if isinstance(value, list):
                     value = [element for element in value if element]
                     if array_serialization is "csv":
-                        url += "{0}{1}={2}".format(seperator, key,
-                            ",".join(quote(str(x), safe='') for x in value))
+                        url += "{0}{1}={2}".format(separator, key,
+                                                   ",".join(quote(str(x), safe='') for x in value))
                     elif array_serialization is "psv":
-                        url += "{0}{1}={2}".format(seperator, key,
-                            "|".join(quote(str(x), safe='') for x in value))
+                        url += "{0}{1}={2}".format(separator, key,
+                                                   "|".join(quote(str(x), safe='') for x in value))
                     elif array_serialization is "tsv":
-                        url += "{0}{1}={2}".format(seperator, key,
-                            "\t".join(quote(str(x), safe='') for x in value))
+                        url += "{0}{1}={2}".format(separator, key,
+                                                   "\t".join(quote(str(x), safe='') for x in value))
                     else:
-                        url += "{0}{1}".format(seperator,
-                            "&".join(("{0}={1}".format(k, quote(str(v), safe='')))
-                                for k, v in APIHelper.serialize_array(key, value, array_serialization)))
+                        url += "{0}{1}".format(separator,
+                                               "&".join(("{0}={1}".format(k, quote(str(v), safe='')))
+                                                        for k, v in
+                                                        APIHelper.serialize_array(key, value, array_serialization)))
                 else:
-                    url += "{0}{1}={2}".format(seperator, key, quote(str(value), safe=''))
+                    url += "{0}{1}={2}".format(separator, key, quote(str(value), safe=''))
 
         return url
 
     @staticmethod
     def clean_url(url):
-        """Validates and processes the given query Url to clean empty slashes.
+        """
+        Validates and processes the given query Url to clean empty slashes.
 
         Args:
             url (str): The given query Url to process.
@@ -235,11 +244,12 @@ class APIHelper(object):
     @staticmethod
     def form_encode_parameters(form_parameters,
                                array_serialization="indexed"):
-        """Form encodes a dictionary of form parameters
+        """
+        Form encodes a dictionary of form parameters
 
         Args:
             form_parameters (dictionary): The given dictionary which has
-            atleast one model to form encode.
+            at least one model to form encode.
             array_serialization (str): The format of array parameter serialization.
 
         Returns:
@@ -253,12 +263,12 @@ class APIHelper(object):
 
         return encoded
 
-
     @staticmethod
     def form_encode(obj,
                     instance_name,
                     array_serialization="indexed"):
-        """Encodes a model in a form-encoded manner such as person[Name]
+        """
+        Encodes a model in a form-encoded manner such as person[Name]
 
         Args:
             obj (object): The given Object to form encode.
@@ -291,7 +301,8 @@ class APIHelper(object):
 
     @staticmethod
     def to_dictionary(obj):
-        """Creates a dictionary representation of a class instance. The
+        """
+        Creates a dictionary representation of a class instance. The
         keys are taken from the API description and may differ from language
         specific variable names of properties.
 
@@ -312,12 +323,15 @@ class APIHelper(object):
                 # Loop through each item
                 dictionary[obj._names[name]] = list()
                 for item in value:
-                    dictionary[obj._names[name]].append(APIHelper.to_dictionary(item) if hasattr(item, "_names") else item)
+                    dictionary[obj._names[name]].append(
+                        APIHelper.to_dictionary(item) if hasattr(item, "_names") else item)
             elif isinstance(value, dict):
                 # Loop through each item
                 dictionary[obj._names[name]] = dict()
                 for key in value:
-                    dictionary[obj._names[name]][key] = APIHelper.to_dictionary(value[key]) if hasattr(value[key], "_names") else value[key]
+                    dictionary[obj._names[name]][key] = APIHelper.to_dictionary(value[key]) if hasattr(value[key],
+                                                                                                       "_names") else \
+                    value[key]
             else:
                 dictionary[obj._names[name]] = APIHelper.to_dictionary(value) if hasattr(value, "_names") else value
 
@@ -326,7 +340,8 @@ class APIHelper(object):
 
     class CustomDate(object):
 
-        """ A base class for wrapper classes of datetime.
+        """
+        A base class for wrapper classes of datetime.
 
         This class contains methods which help in
         appropriate serialization of datetime objects.
@@ -351,7 +366,9 @@ class APIHelper(object):
 
     class HttpDateTime(CustomDate):
 
-        """ A wrapper class for datetime to support HTTP date format."""
+        """
+        A wrapper class for datetime to support HTTP date format.
+        """
 
         @classmethod
         def from_datetime(cls, date_time):
@@ -365,7 +382,9 @@ class APIHelper(object):
 
     class UnixDateTime(CustomDate):
 
-        """ A wrapper class for datetime to support Unix date format."""
+        """
+        A wrapper class for datetime to support Unix date format.
+        """
 
         def __str__(self):
             return str(self.value)
@@ -381,7 +400,9 @@ class APIHelper(object):
 
     class RFC3339DateTime(CustomDate):
 
-        """ A wrapper class for datetime to support Rfc 3339 format."""
+        """
+        A wrapper class for datetime to support Rfc 3339 format.
+        """
 
         @classmethod
         def from_datetime(cls, date_time):

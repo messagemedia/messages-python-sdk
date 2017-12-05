@@ -6,9 +6,13 @@
 """
 
 from ..api_helper import APIHelper
+from ..configuration import Configuration
+from ..http.auth.basic_auth import BasicAuth
+from ..http.auth.hmac_auth import HmacAuth
 from ..http.http_context import HttpContext
 from ..http.requests_client import RequestsClient
 from ..exceptions.api_exception import APIException
+
 
 class BaseController(object):
 
@@ -31,16 +35,17 @@ class BaseController(object):
     http_call_back = None
 
     global_headers = {
-        'user-agent': 'messagemedia-messages-python-sdk-1.0.0'
+        'user-agent': 'messagemedia-messages-python-sdk-1.1.0'
     }
 
     def __init__(self, client=None, call_back=None):
-        if client != None:
+        if client is not None:
             self.http_client = client
-        if call_back != None:
+        if call_back is not None:
             self.http_call_back = call_back
 
-    def validate_parameters(self, **kwargs):
+    @staticmethod
+    def validate_parameters(**kwargs):
         """Validates required parameters of an endpoint.
 
         Args:
@@ -51,7 +56,7 @@ class BaseController(object):
             if value is None:
                 raise ValueError("Required parameter {} cannot be None.".format(name))
 
-    def execute_request(self, request, binary=False, name = None):
+    def execute_request(self, request, binary=False, name=None):
         """Executes an HttpRequest.
 
         Args:
@@ -62,10 +67,13 @@ class BaseController(object):
         Returns:
             HttpContext: The HttpContext of the request. It contains,
                 both, the request itself and the HttpResponse object.
+                :param request:
+                :param binary:
+                :param name:
 
         """
         # Invoke the on before request HttpCallBack if specified
-        if self.http_call_back != None:
+        if self.http_call_back is not None:
             self.logger.info("Calling the on_before_request method of http_call_back for {}.".format(name))
             self.http_call_back.on_before_request(request)
 
@@ -82,18 +90,31 @@ class BaseController(object):
         context = HttpContext(request, response)
 
         # Invoke the on after response HttpCallBack if specified
-        if self.http_call_back != None:
+        if self.http_call_back is not None:
             self.logger.info("Calling on_after_response method of http_call_back for {}.".format(name))
             self.http_call_back.on_after_response(context)
 
         return context
 
-    def validate_response(self, context):
+    @staticmethod
+    def apply_authentication(request, url, body=None):
+        if Configuration.hmac_auth_user_name is None or Configuration.hmac_auth_password is None:
+            BasicAuth.apply(request)
+        else:
+            HmacAuth.apply(request, url, body)
+
+    @staticmethod
+    def add_account_header(headers, account_header):
+        if account_header is not None:
+            headers['account'] = account_header
+
+    @staticmethod
+    def validate_response(context):
         """Validates an HTTP response by checking for global errors.
 
         Args:
             context (HttpContext): The HttpContext of the API call.
 
         """
-        if (context.response.status_code < 200) or (context.response.status_code > 208): #[200,208] = HTTP OK
+        if (context.response.status_code < 200) or (context.response.status_code > 208): # [200,208] = HTTP OK
             raise APIException('HTTP response not OK.', context)

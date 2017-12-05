@@ -5,9 +5,11 @@
 
 """
 
+
 class HttpResponse(object):
 
-    """Information about an HTTP Response including its status code, returned
+    """
+    Information about an HTTP Response including its status code, returned
         headers, and raw body
 
     Attributes:
@@ -23,7 +25,8 @@ class HttpResponse(object):
                  status_code,
                  headers,
                  raw_body):
-        """Constructor for the HttpResponse class
+        """
+        Constructor for the HttpResponse class
 
         Args:
             status_code (int): The response status code.

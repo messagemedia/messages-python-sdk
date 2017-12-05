@@ -8,7 +8,8 @@
 
 class ConfirmRepliesAsReceivedRequest(object):
 
-    """Implementation of the 'Confirm replies as received request' model.
+    """
+    Implementation of the 'Confirm replies as received request' model.
 
     TODO: type model description here.
 
@@ -19,16 +20,17 @@ class ConfirmRepliesAsReceivedRequest(object):
 
     # Create a mapping from Model property names to API property names
     _names = {
-        "reply_ids" : "reply_ids"
+        "reply_ids": "reply_ids"
     }
 
     def __init__(self,
                  reply_ids=None):
-        """Constructor for the ConfirmRepliesAsReceivedRequest class"""
+        """
+        Constructor for the ConfirmRepliesAsReceivedRequest class
+        """
 
         # Initialize members of the class
         self.reply_ids = reply_ids
-
 
     @classmethod
     def from_dictionary(cls,
@@ -52,5 +54,3 @@ class ConfirmRepliesAsReceivedRequest(object):
 
         # Return an object of this model
         return cls(reply_ids)
-
-

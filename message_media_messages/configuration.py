@@ -7,9 +7,8 @@
 import sys
 import logging
 
-from .api_helper import APIHelper
-
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+
 
 class Configuration(object):
 
@@ -25,7 +24,7 @@ class Configuration(object):
     array_serialization = "indexed"
 
     # The base Uri for API calls
-    base_uri = 'https://api.messagemedia.com'
+    base_uri = 'http://api.messagemedia.com'
 
     # The username to use with basic authentication
     # TODO: Set an appropriate value
@@ -34,4 +33,12 @@ class Configuration(object):
     # The password to use with basic authentication
     # TODO: Set an appropriate value
     basic_auth_password = "TODO: Replace"
+
+    # The username to use with HMAC authentication
+    # TODO: Set an appropriate value
+    hmac_auth_user_name = None
+
+    # The password to use with HMAC authentication
+    # TODO: Set an appropriate value
+    hmac_auth_password = None
 

@@ -8,7 +8,8 @@
 
 class ConfirmDeliveryReportsAsReceivedRequest11(object):
 
-    """Implementation of the 'Confirm delivery reports as received request11' model.
+    """
+    Implementation of the 'Confirm delivery reports as received request11' model.
 
     TODO: type model description here.
 
@@ -20,16 +21,17 @@ class ConfirmDeliveryReportsAsReceivedRequest11(object):
 
     # Create a mapping from Model property names to API property names
     _names = {
-        "delivery_report_ids" : "delivery_report_ids"
+        "delivery_report_ids": "delivery_report_ids"
     }
 
     def __init__(self,
                  delivery_report_ids=None):
-        """Constructor for the ConfirmDeliveryReportsAsReceivedRequest11 class"""
+        """
+        Constructor for the ConfirmDeliveryReportsAsReceivedRequest11 class
+        """
 
         # Initialize members of the class
         self.delivery_report_ids = delivery_report_ids
-
 
     @classmethod
     def from_dictionary(cls,
@@ -53,5 +55,3 @@ class ConfirmDeliveryReportsAsReceivedRequest11(object):
 
         # Return an object of this model
         return cls(delivery_report_ids)
-
-

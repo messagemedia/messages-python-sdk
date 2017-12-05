@@ -6,5 +6,5 @@ __all__ = [
     'http',
     'exceptions',
     'decorators',
-    'message_media_messages_client',
+    'message_media_messages_client'
 ]

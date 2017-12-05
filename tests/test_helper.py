@@ -5,11 +5,14 @@
 
 """
 
-import os, tempfile, requests
+import tempfile
+import requests
+
 
 class TestHelper(object):
 
-    """A Helper Class for various functions associated with API testing.
+    """
+    A Helper Class for various functions associated with API testing.
     
     This class contains static and class methods for operations that need to be
     performed during API testing. All of the methods inside this class are
@@ -25,11 +28,12 @@ class TestHelper(object):
     cache = {}
 
     @staticmethod
-    def match_headers(expected_headers, 
-                      received_headers, 
+    def match_headers(expected_headers,
+                      received_headers,
                       allow_extra=True):
-        """Static method to compare the received headers with the expected headers.
-        
+        """
+        Static method to compare the received headers with the expected headers.
+
         Args:
             expected_headers (dict): A dictionary of expected headers (keys in lower case).
             received_headers (dict): A dictionary of headers received.
@@ -37,18 +41,19 @@ class TestHelper(object):
                 allow extra headers.
         Returns:
             Boolean: True if headers match, False otherwise.
- 
+
         """
         if ((len(received_headers) < len(expected_headers)) or
-           ((allow_extra == False) and (len(expected_headers) != len(received_headers)))):
+           ((allow_extra is False) and (len(expected_headers) != len(received_headers)))):
             return False
 
-        received_headers = {k.lower(): v for k, v in received_headers.items()}
+        # received_headers = {k.lower(): v for k, v in received_headers.items()}
+
         for e_key in expected_headers:
             if e_key not in received_headers:
                 return False
-            if((expected_headers[e_key] != None) and
-               (expected_headers[e_key] != received_headers[e_key])):                
+            if((expected_headers[e_key] is not None) and
+               (expected_headers[e_key.lower()] != received_headers[e_key.lower()])):
                 return False
 
         return True
@@ -81,13 +86,13 @@ class TestHelper(object):
                 if key not in received_body:
                     return False
                 if check_values or type(expected_body[key]) == dict:
-                    if TestHelper.match_body(expected_body[key], received_body[key], 
-                                             check_values, check_order, check_count) == False:
+                    if not TestHelper.match_body(expected_body[key], received_body[key], check_values,
+                                                 check_order, check_count):
                         return False
         elif type(expected_body) == list: 
             if type(received_body) != list:
                 return False
-            if check_count == True and (len(expected_body) != len(received_body)):
+            if check_count is True and (len(expected_body) != len(received_body)):
                 return False
             else:
                 previous_matches = []
@@ -98,7 +103,7 @@ class TestHelper(object):
                                                         check_values, check_order, check_count)]
                     if len(matches) == 0:
                         return False
-                    if check_order == True:
+                    if check_order is True:
                         if i != 0 and all([all(y > x for y in previous_matches) for x in matches]):
                             return False
                         previous_matches = matches

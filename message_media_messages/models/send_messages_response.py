@@ -8,7 +8,8 @@
 
 class SendMessagesResponse(object):
 
-    """Implementation of the 'Send messages response' model.
+    """
+    Implementation of the 'Send messages response' model.
 
     TODO: type model description here.
 
@@ -19,7 +20,7 @@ class SendMessagesResponse(object):
 
     # Create a mapping from Model property names to API property names
     _names = {
-        "messages" : "messages"
+        "messages": "messages"
     }
 
     def __init__(self,
@@ -28,7 +29,6 @@ class SendMessagesResponse(object):
 
         # Initialize members of the class
         self.messages = messages
-
 
     @classmethod
     def from_dictionary(cls,
@@ -52,5 +52,3 @@ class SendMessagesResponse(object):
 
         # Return an object of this model
         return cls(messages)
-
-

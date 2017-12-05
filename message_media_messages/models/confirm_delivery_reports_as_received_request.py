@@ -8,7 +8,8 @@
 
 class ConfirmDeliveryReportsAsReceivedRequest(object):
 
-    """Implementation of the 'Confirm delivery reports as received request' model.
+    """
+    Implementation of the 'Confirm delivery reports as received request' model.
 
     TODO: type model description here.
 
@@ -19,7 +20,7 @@ class ConfirmDeliveryReportsAsReceivedRequest(object):
 
     # Create a mapping from Model property names to API property names
     _names = {
-        "delivery_report_ids" : "delivery_report_ids"
+        "delivery_report_ids": "delivery_report_ids"
     }
 
     def __init__(self,
@@ -28,7 +29,6 @@ class ConfirmDeliveryReportsAsReceivedRequest(object):
 
         # Initialize members of the class
         self.delivery_report_ids = delivery_report_ids
-
 
     @classmethod
     def from_dictionary(cls,
@@ -52,5 +52,3 @@ class ConfirmDeliveryReportsAsReceivedRequest(object):
 
         # Return an object of this model
         return cls(delivery_report_ids)
-
-

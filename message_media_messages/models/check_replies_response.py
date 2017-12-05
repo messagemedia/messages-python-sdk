@@ -8,7 +8,8 @@
 
 class CheckRepliesResponse(object):
 
-    """Implementation of the 'Check replies response' model.
+    """
+    Implementation of the 'Check replies response' model.
 
     TODO: type model description here.
 
@@ -19,21 +20,23 @@ class CheckRepliesResponse(object):
 
     # Create a mapping from Model property names to API property names
     _names = {
-        "replies" : "replies"
+        "replies": "replies"
     }
 
     def __init__(self,
                  replies=None):
-        """Constructor for the CheckRepliesResponse class"""
+        """
+        Constructor for the CheckRepliesResponse class
+        """
 
         # Initialize members of the class
         self.replies = replies
 
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
-        """Creates an instance of this model from a dictionary
+        """
+        Creates an instance of this model from a dictionary
 
         Args:
             dictionary (dictionary): A dictionary representation of the object as
@@ -52,5 +55,3 @@ class CheckRepliesResponse(object):
 
         # Return an object of this model
         return cls(replies)
-
-

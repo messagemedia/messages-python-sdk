@@ -5,12 +5,12 @@
 
 """
 
-class APIException(Exception):
 
+class APIException(Exception):
     """Class that handles HTTP Exceptions when fetching API Endpoints.
 
     Attributes:
-		response_code (int): The status code of the response.
+        response_code (int): The status code of the response.
         context (HttpContext): The HttpContext of the API call.
 
     """

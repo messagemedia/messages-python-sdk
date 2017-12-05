@@ -9,9 +9,9 @@ import logging
 from .base_controller import BaseController
 from ..api_helper import APIHelper
 from ..configuration import Configuration
-from ..http.auth.basic_auth import BasicAuth
 from ..models.check_replies_response import CheckRepliesResponse
 from ..exceptions.api_exception import APIException
+
 
 class RepliesController(BaseController):
 
@@ -22,7 +22,8 @@ class RepliesController(BaseController):
         self.logger = logging.getLogger(__name__)
 
     def create_confirm_replies_as_received(self,
-                                           body):
+                                           body,
+                                           account_header=None):
         """Does a POST request to /v1/replies/confirmed.
 
         Mark a reply message as confirmed so it is no longer returned in check
@@ -50,6 +51,8 @@ class RepliesController(BaseController):
         Args:
             body (ConfirmRepliesAsReceivedRequest): TODO: type description
                 here. Example: 
+            account_header:  TODO: type description
+                here. Example:
 
         Returns:
             mixed: Response from the API. 
@@ -66,8 +69,9 @@ class RepliesController(BaseController):
     
             # Prepare query URL
             self.logger.info('Preparing query URL for create_confirm_replies_as_received.')
+            url = '/v1/replies/confirmed'
             _query_builder = Configuration.base_uri
-            _query_builder += '/v1/replies/confirmed'
+            _query_builder += url
             _query_url = APIHelper.clean_url(_query_builder)
     
             # Prepare headers
@@ -76,12 +80,15 @@ class RepliesController(BaseController):
                 'accept': 'application/json',
                 'content-type': 'application/json; charset=utf-8'
             }
-    
+
+            self.add_account_header(_headers, account_header)
+
             # Prepare and execute request
             self.logger.info('Preparing and executing request for create_confirm_replies_as_received.')
-            _request = self.http_client.post(_query_url, headers=_headers, parameters=APIHelper.json_serialize(body))
-            BasicAuth.apply(_request)
-            _context = self.execute_request(_request, name = 'create_confirm_replies_as_received')
+            json_body = APIHelper.json_serialize(body)
+            _request = self.http_client.post(_query_url, headers=_headers, parameters=json_body)
+            self.apply_authentication(_request, url, json_body)
+            _context = self.execute_request(_request, name='create_confirm_replies_as_received')
 
             # Endpoint and global error handling using HTTP status codes.
             self.logger.info('Validating response for create_confirm_replies_as_received.')
@@ -93,10 +100,10 @@ class RepliesController(BaseController):
             return APIHelper.json_deserialize(_context.response.raw_body)
 
         except Exception as e:
-            self.logger.error(e, exc_info = True)
+            self.logger.error(e, exc_info=True)
             raise
 
-    def get_check_replies(self):
+    def get_check_replies(self, account_header=None):
         """Does a GET request to /v1/replies.
 
         Check for any replies that have been received.
@@ -183,6 +190,10 @@ class RepliesController(BaseController):
         messages rather than polling
         the check replies endpoint.*
 
+        Args:
+            account_header:  TODO: type description
+                here. Example:
+
         Returns:
             CheckRepliesResponse: Response from the API. 
 
@@ -198,8 +209,9 @@ class RepliesController(BaseController):
     
             # Prepare query URL
             self.logger.info('Preparing query URL for get_check_replies.')
+            url = '/v1/replies'
             _query_builder = Configuration.base_uri
-            _query_builder += '/v1/replies'
+            _query_builder += url
             _query_url = APIHelper.clean_url(_query_builder)
     
             # Prepare headers
@@ -207,17 +219,19 @@ class RepliesController(BaseController):
             _headers = {
                 'accept': 'application/json'
             }
-    
+
+            self.add_account_header(_headers, account_header)
+
             # Prepare and execute request
             self.logger.info('Preparing and executing request for get_check_replies.')
             _request = self.http_client.get(_query_url, headers=_headers)
-            BasicAuth.apply(_request)
-            _context = self.execute_request(_request, name = 'get_check_replies')
+            self.apply_authentication(_request, url)
+            _context = self.execute_request(_request, name='get_check_replies')
             self.validate_response(_context)
     
             # Return appropriate type
             return APIHelper.json_deserialize(_context.response.raw_body, CheckRepliesResponse.from_dictionary)
 
         except Exception as e:
-            self.logger.error(e, exc_info = True)
+            self.logger.error(e, exc_info=True)
             raise
