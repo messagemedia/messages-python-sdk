@@ -207,7 +207,9 @@ class DeliveryReportsController(BaseController):
             _query_builder = Configuration.base_uri
             _query_builder += url
             _query_url = APIHelper.clean_url(_query_builder)
-    
+
+            json_body = APIHelper.json_serialize(body)
+
             # Prepare headers
             self.logger.info('Preparing headers for create_confirm_delivery_reports_as_received.')
             _headers = {
@@ -219,7 +221,6 @@ class DeliveryReportsController(BaseController):
 
             # Prepare and execute request
             self.logger.info('Preparing and executing request for create_confirm_delivery_reports_as_received.')
-            json_body = APIHelper.json_serialize(body)
             _request = self.http_client.post(_query_url, headers=_headers, parameters=json_body)
             self.apply_authentication(_request, url, json_body)
             _context = self.execute_request(_request, name='create_confirm_delivery_reports_as_received')

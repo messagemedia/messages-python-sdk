@@ -4,7 +4,8 @@
    message_media_messages.http.auth.basic_auth
 
 """
-
+import base64
+from struct import unpack
 from wsgiref.handlers import format_date_time
 from datetime import datetime
 from time import mktime
@@ -64,6 +65,6 @@ class HmacAuth:
             request_type = "POST"
 
         signing_string = "date: {}\n{}{} {} HTTP/1.1".format(date, content_signature, request_type, url)
-        hashed = hmac.new(Configuration.hmac_auth_password, signing_string, hashlib.sha1)
+        hashed = hmac.new(Configuration.hmac_auth_password.encode("utf-8"), signing_string.encode("utf-8"), hashlib.sha1)
 
-        return hashed.digest().encode("base64").rstrip('\n')
+        return base64.b64encode(hashed.digest()).decode('utf-8');

@@ -24,7 +24,7 @@ class Configuration(object):
     array_serialization = "indexed"
 
     # The base Uri for API calls
-    base_uri = 'http://api.messagemedia.com'
+    base_uri = 'https://api.messagemedia.com'
 
     # The username to use with basic authentication
     # TODO: Set an appropriate value
