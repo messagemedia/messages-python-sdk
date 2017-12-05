@@ -1,22 +1,21 @@
 from setuptools import setup, find_packages
+from codecs import open
+from os import path
+here = path.abspath(path.dirname(__file__))
 
-# Try to convert markdown README to rst format for PyPI.
-try:
-    import pypandoc
-    long_description = pypandoc.convert('README.md', 'rst')
-except(IOError, ImportError):
-    long_description = open('README.md').read()
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
     name='messagemedia_messages_sdk',
-    version='1.1.0',
+    version='1.1.3',
     description='The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging '
                 'applications.',
-    long_description=long_description,
     author='MessageMedia Developers',
     author_email='developers@messagemedia.com',
     url='https://developers.messagemedia.com/',
     download_url='https://github.com/messagemedia/messages-python-sdk',
+	long_description=long_description,
     license='Apache License 2.0',
     packages=find_packages(),
     install_requires=[

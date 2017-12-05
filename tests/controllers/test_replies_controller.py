@@ -4,7 +4,7 @@
     tests.controllers.test_replies_controller
 
 """
-
+from message_media_messages.exceptions.api_exception import APIException
 from .controller_test_base import ControllerTestBase
 from ..test_helper import TestHelper
 from message_media_messages.api_helper import APIHelper
@@ -135,3 +135,11 @@ class RepliesControllerTests(ControllerTestBase):
         # Test whether the captured response is as we expected
         self.assertIsNotNone(result, "Result should exist")
         self.assertTrue(self.response_catcher.response.raw_body.startswith('{"replies":['), "Replies should exist")
+
+    def test_check_replies_with_dummy_account(self):
+
+        try:
+            # Perform the API call through the SDK function
+            self.controller.get_check_replies('INVALID ACCOUNT')
+        except APIException as apiException:
+            self.assertEquals(apiException.response_code, 403, "Exception must be raised with 403 error code.")
