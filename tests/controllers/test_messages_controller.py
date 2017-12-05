@@ -98,7 +98,7 @@ class MessagesControllerTests(ControllerTestBase):
             ), SendMessagesRequest.from_dictionary)
 
         # Perform the API call through the SDK function
-        """result = self.controller.create_send_messages(body)
+        result = self.controller.create_send_messages(body)
 
         # Test response code
         self.assertEquals(self.response_catcher.response.status_code, 202)
@@ -144,4 +144,3 @@ class MessagesControllerTests(ControllerTestBase):
         self.assertIsNotNone(body.messages[1]['message_id'], 'Message ID should not be empty')
         self.assertIsNotNone(body.messages[1]['message_expiry_timestamp'], 'Message Expiry should not be empty')
         self.assertIsNotNone(body.messages[1]['scheduled'], 'Scheduled time should not be empty')
-"""
