@@ -134,4 +134,3 @@ class RepliesControllerTests(ControllerTestBase):
 
         # Test whether the captured response is as we expected
         self.assertIsNotNone(result, "Result should exist")
-        self.assertEqual('{"replies":[]}', self.response_catcher.response.raw_body, "Replies should exist")
