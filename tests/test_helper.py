@@ -28,12 +28,12 @@ class TestHelper(object):
     cache = {}
 
     @staticmethod
-    def match_headers(expected_headers, 
-                      received_headers, 
+    def match_headers(expected_headers,
+                      received_headers,
                       allow_extra=True):
         """
         Static method to compare the received headers with the expected headers.
-        
+
         Args:
             expected_headers (dict): A dictionary of expected headers (keys in lower case).
             received_headers (dict): A dictionary of headers received.
@@ -41,18 +41,19 @@ class TestHelper(object):
                 allow extra headers.
         Returns:
             Boolean: True if headers match, False otherwise.
- 
+
         """
         if ((len(received_headers) < len(expected_headers)) or
            ((allow_extra is False) and (len(expected_headers) != len(received_headers)))):
             return False
 
-        received_headers = {k.lower(): v for k, v in received_headers.items()}
+        # received_headers = {k.lower(): v for k, v in received_headers.items()}
+
         for e_key in expected_headers:
             if e_key not in received_headers:
                 return False
             if((expected_headers[e_key] is not None) and
-               (expected_headers[e_key] != received_headers[e_key])):                
+               (expected_headers[e_key.lower()] != received_headers[e_key.lower()])):
                 return False
 
         return True
