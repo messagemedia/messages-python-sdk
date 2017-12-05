@@ -1,4 +1,4 @@
-# MessageMedia.SDK.Messages Python SDK
+# MessageMedia Messages Python SDK
 [![Travis Build Status](https://api.travis-ci.org/messagemedia/messages-python-sdk.svg?branch=master)](https://travis-ci.org/messagemedia/messages-python-sdk)
 [![PyPI](https://img.shields.io/pypi/v/messagemedia-messages-sdk.svg)](https://pypi.python.org/pypi/messagemedia-messages-sdk)
 
