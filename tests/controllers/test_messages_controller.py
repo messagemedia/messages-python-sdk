@@ -124,9 +124,9 @@ class MessagesControllerTests(ControllerTestBase):
         self.assertEqual(body.messages[0]['source_number'], result.messages[0]['source_number'],
                          'Source Number should match exactly (string literal match)')
 
-        self.assertIsNotNone(body.messages[0]['message_id'], 'Message ID should not be empty')
-        self.assertIsNotNone(body.messages[0]['message_expiry_timestamp'], 'Message Expiry should not be empty')
-        self.assertIsNotNone(body.messages[0]['scheduled'], 'Scheduled time should not be empty')
+        self.assertIsNotNone(result.messages[0]['message_id'], 'Message ID should not be empty')
+        self.assertIsNotNone(result.messages[0]['message_expiry_timestamp'], 'Message Expiry should not be empty')
+        self.assertIsNotNone(result.messages[0]['scheduled'], 'Scheduled time should not be empty')
 
         self.assertEqual(body.messages[1]['callback_url'], result.messages[1]['callback_url'],
                          'Callback URL should match exactly (string literal match)')
@@ -141,6 +141,6 @@ class MessagesControllerTests(ControllerTestBase):
         self.assertEqual(body.messages[1]['source_number'], result.messages[1]['source_number'],
                          'Source Number should match exactly (string literal match)')
 
-        self.assertIsNotNone(body.messages[1]['message_id'], 'Message ID should not be empty')
-        self.assertIsNotNone(body.messages[1]['message_expiry_timestamp'], 'Message Expiry should not be empty')
-        self.assertIsNotNone(body.messages[1]['scheduled'], 'Scheduled time should not be empty')
+        self.assertIsNotNone(result.messages[1]['message_id'], 'Message ID should not be empty')
+        self.assertIsNotNone(result.messages[1]['message_expiry_timestamp'], 'Message Expiry should not be empty')
+        self.assertIsNotNone(result.messages[1]['scheduled'], 'Scheduled time should not be empty')
