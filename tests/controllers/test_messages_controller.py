@@ -4,7 +4,7 @@
     tests.controllers.test_messages_controller
 
 """
-
+from message_media_messages.exceptions.api_exception import APIException
 from .controller_test_base import ControllerTestBase
 from ..test_helper import TestHelper
 from message_media_messages.api_helper import APIHelper
@@ -144,3 +144,25 @@ class MessagesControllerTests(ControllerTestBase):
         self.assertIsNotNone(result.messages[1]['message_id'], 'Message ID should not be empty')
         self.assertIsNotNone(result.messages[1]['message_expiry_timestamp'], 'Message Expiry should not be empty')
         self.assertIsNotNone(result.messages[1]['scheduled'], 'Scheduled time should not be empty')
+
+    # Make sure our SDK fails when passed an invalid account id
+    def test_check_replies_with_dummy_account(self):
+        # Parameters for the API call
+        body = APIHelper.json_deserialize((
+            '{"messages":[{"callback_url":"https://my.callback.url.com","content":"My fi'
+            'rst message","destination_number":"+61491570156","delivery_report":true,"fo'
+            'rmat":"SMS","message_expiry_timestamp":"2016-11-03T11:49:02.807Z","metadata'
+            '":{"key1":"value1","key2":"value2"},"scheduled":"2016-11-03T11:49:02.807Z",'
+            '"source_number":"+61491570157","source_number_type":"INTERNATIONAL"},{"call'
+            'back_url":"https://my.callback.url.com","content":"My second message","dest'
+            'ination_number":"+61491570158","delivery_report":true,"format":"SMS","messa'
+            'ge_expiry_timestamp":"2016-11-03T11:49:02.807Z","metadata":{"key1":"value1"'
+            ',"key2":"value2"},"scheduled":"2016-11-03T11:49:02.807Z","source_number":"+'
+            '61491570159","source_number_type":"INTERNATIONAL"}]}'
+            ), SendMessagesRequest.from_dictionary)
+
+        try:
+            # Perform the API call through the SDK function
+            self.controller.create_send_messages(body, 'INVALID ACCOUNT')
+        except APIException as apiException:
+            self.assertEquals(apiException.response_code, 403, "Exception must be raised with 403 error code.")

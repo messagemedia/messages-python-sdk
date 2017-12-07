@@ -4,7 +4,7 @@
     tests.controllers.test_delivery_reports_controller
 
 """
-
+from message_media_messages.exceptions.api_exception import APIException
 from .controller_test_base import ControllerTestBase
 from ..test_helper import TestHelper
 from message_media_messages.api_helper import APIHelper
@@ -101,6 +101,14 @@ class DeliveryReportsControllerTests(ControllerTestBase):
         self.assertIsNotNone(result, "Result should exist")
         self.assertIsNotNone(result.delivery_reports, "Result's delivery reports should exist")
 
+    # Make sure our SDK fails when passed an invalid account id
+    def test_check_delivery_reports_with_dummy_account(self):
+        try:
+            # Perform the API call through the SDK function
+            self.controller.get_check_delivery_reports('INVALID ACCOUNT')
+        except APIException as apiException:
+            self.assertEquals(apiException.response_code, 403, "Exception must be raised with 403 error code.")
+
     # Mark a delivery report as confirmed so it is no longer return in check delivery reports requests.
     # The confirm delivery reports endpoint is intended to be used in conjunction with the check delivery
     # reports endpoint to allow for robust processing of delivery reports. Once one or more delivery
@@ -136,3 +144,17 @@ class DeliveryReportsControllerTests(ControllerTestBase):
         self.assertTrue(TestHelper.match_headers(expected_headers, self.response_catcher.response.headers),
                         "Headers should match")
         self.assertIsNotNone(result, "Result should exist")
+
+    # Make sure our SDK fails when passed an invalid account id
+    def test_confirm_delivery_reports_with_dummy_account(self):
+        # Parameters for the API call
+        body = APIHelper.json_deserialize((
+            '{"delivery_report_ids":["011dcead-6988-4ad6-a1c7-6b6c68ea628d","3487b3fa-65'
+            '86-4979-a233-2d1b095c7718","ba28e94b-c83d-4759-98e7-ff9c7edb87a1"]}'
+            ), ConfirmDeliveryReportsAsReceivedRequest.from_dictionary)
+
+        try:
+            # Perform the API call through the SDK function
+            self.controller.create_confirm_delivery_reports_as_received(body, 'INVALID ACCOUNT')
+        except APIException as apiException:
+            self.assertEquals(apiException.response_code, 403, "Exception must be raised with 403 error code.")

@@ -4,7 +4,7 @@
     tests.controllers.test_replies_controller
 
 """
-
+from message_media_messages.exceptions.api_exception import APIException
 from .controller_test_base import ControllerTestBase
 from ..test_helper import TestHelper
 from message_media_messages.api_helper import APIHelper
@@ -51,6 +51,20 @@ class RepliesControllerTests(ControllerTestBase):
         expected_headers = {'content-type': None}
 
         self.assertTrue(TestHelper.match_headers(expected_headers, self.response_catcher.response.headers))
+
+    # Make sure our SDK fails when passed an invalid account id
+    def test_confirm_replies_with_dummy_account(self):
+        # Parameters for the API call
+        body = APIHelper.json_deserialize((
+            '{"reply_ids":["011dcead-6988-4ad6-a1c7-6b6c68ea628d","3487b3fa-6586-4979-a2'
+            '33-2d1b095c7718","ba28e94b-c83d-4759-98e7-ff9c7edb87a1"]}'
+            ), ConfirmRepliesAsReceivedRequest.from_dictionary)
+
+        try:
+            # Perform the API call through the SDK function
+            self.controller.create_confirm_replies_as_received(body, 'INVALID ACCOUNT')
+        except APIException as apiException:
+            self.assertEquals(apiException.response_code, 403, "Exception must be raised with 403 error code.")
 
     # Check for any replies that have been received.
     # Replies are messages that have been sent from a handset in response to a message sent by an
@@ -135,3 +149,12 @@ class RepliesControllerTests(ControllerTestBase):
         # Test whether the captured response is as we expected
         self.assertIsNotNone(result, "Result should exist")
         self.assertTrue(self.response_catcher.response.raw_body.startswith('{"replies":['), "Replies should exist")
+
+    # Make sure our SDK fails when passed an invalid account id
+    def test_check_replies_with_dummy_account(self):
+
+        try:
+            # Perform the API call through the SDK function
+            self.controller.get_check_replies('INVALID ACCOUNT')
+        except APIException as apiException:
+            self.assertEquals(apiException.response_code, 403, "Exception must be raised with 403 error code.")
