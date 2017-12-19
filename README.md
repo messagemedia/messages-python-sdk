@@ -15,7 +15,7 @@ Python and PIP executables should be defined in your PATH. Open command prompt a
 This should display the version of the PIP Dependency Manager installed if your installation was successful and the paths are properly defined.
 
 * Using the command line, navigate to the directory you wish to install to.
-* Run the command ```pip install messages-python-sdk```. This will install the SDK and all it's required dependencies.
+* Run the command ```pip install messagemedia-messages-sdk```. This will install the SDK and all it's required dependencies.
 
 ## Example Usage
 
