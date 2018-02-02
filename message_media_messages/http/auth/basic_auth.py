@@ -30,4 +30,4 @@ class BasicAuth:
         header_value = "Basic {}".format(encoded)
         http_request.headers["Authorization"] = header_value
         if(len(username) != 20 or len(password) != 30):
-            print "~~~~ It appears as though your REST API Keys are invalid. Please check and make sure they are correct. (Invalid Length) ~~~~~"
+            print "~~~~~ It appears as though your REST API Keys are invalid. Please check and make sure they are correct. (Invalid Length) ~~~~~"
