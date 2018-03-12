@@ -8,6 +8,8 @@ auth_password = 'YOUR_API_SECRET' # The password to use with basic authenticatio
 
 client = MessageMediaMessagesClient(auth_user_name, auth_password)
 
-delivery_reports_client = client.delivery_reports
+messages_client = client.messages
 
-result = delivery_reports_client.get_check_delivery_reports()
+message_id = 'messageId'
+
+result = messages_client.get_message_status(message_id)
