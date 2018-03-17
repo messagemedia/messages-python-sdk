@@ -30,14 +30,11 @@ class MessageMediaMessagesClient(object):
     def __init__(self,
                  auth_user_name=None,
                  auth_password=None,
-                 use_hmac_autentication=False):
+                 use_hmac_authentication=False):
 
-        if use_hmac_autentication and auth_user_name is not None:
+        if use_hmac_authentication:
             Configuration.hmac_auth_user_name = auth_user_name
-        if use_hmac_autentication and auth_password is not None:
             Configuration.hmac_auth_password = auth_password
-
-        if auth_user_name is not None:
+        else:
             Configuration.basic_auth_user_name = auth_user_name
-        if auth_password is not None:
             Configuration.basic_auth_password = auth_password
