@@ -3,13 +3,12 @@ from message_media_messages.message_media_messages_client import MessageMediaMes
 import sys
 import json
 
-auth_user_name = 'YOUR_API_KEY' # The username to use with basic authentication
-auth_password = 'YOUR_API_SECRET' # The password to use with basic authentication
+auth_user_name = 'YOUR_API_KEY' # The username to use with basic/HMAC authentication
+auth_password = 'YOUR_API_SECRET' # The password to use with basic/HMAC authentication
+use_hmac_authentication = False # Change to True if you are using HMAC keys
 
-client = MessageMediaMessagesClient(auth_user_name, auth_password)
+client = MessageMediaMessagesClient(auth_user_name, auth_password, use_hmac_authentication)
 
-messages_client = client.messages
+delivery_reports_client = client.delivery_reports
 
-message_id = 'messageId'
-
-result = messages_client.get_message_status(message_id)
+result = delivery_reports_client.get_check_delivery_reports()

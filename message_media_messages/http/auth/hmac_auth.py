@@ -41,7 +41,7 @@ class HmacAuth:
 
         if body is not None:
             m = hashlib.md5()
-            m.update(body)
+            #m.update(body)
             content_hash = m.hexdigest()
             content_signature = "x-Content-MD5: {}\n".format(content_hash)
             content_header = "x-Content-MD5 "
