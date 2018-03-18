@@ -24,7 +24,7 @@ class HmacAuth:
         """ Add basic authentication to the request.
 
         Args:
-            http_request (HttpRequest): The HttpRequest object to which 
+            http_request (HttpRequest): The HttpRequest object to which
                 authentication will be added.
             body: the body of the request. None for GET requests
             url: the url of the request
@@ -41,7 +41,6 @@ class HmacAuth:
 
         if body is not None:
             m = hashlib.md5()
-            #m.update(body)
             content_hash = m.hexdigest()
             content_signature = "x-Content-MD5: {}\n".format(content_hash)
             content_header = "x-Content-MD5 "
