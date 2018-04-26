@@ -29,5 +29,3 @@ class BasicAuth:
         encoded = base64.b64encode(str.encode(joined)).decode('iso-8859-1')
         header_value = "Basic {}".format(encoded)
         http_request.headers["Authorization"] = header_value
-        if(len(username) != 20 or len(password) != 30):
-            print "~~~~~ It appears as though your REST API Keys are invalid. Please check and make sure they are correct. (Invalid Length) ~~~~~"
