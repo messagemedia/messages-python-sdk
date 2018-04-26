@@ -19,7 +19,7 @@ class BasicAuth:
         """ Add basic authentication to the request.
 
         Args:
-            http_request (HttpRequest): The HttpRequest object to which 
+            http_request (HttpRequest): The HttpRequest object to which
                 authentication will be added.
 
         """
