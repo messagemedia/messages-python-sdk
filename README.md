@@ -60,7 +60,9 @@ We welcome your thoughts on how we could best provide you with SDKs that would s
 
 ## :star: Installation
 Run the following command to install the SDK via pip:
-`pip install messagemedia-messages-sdk`
+```
+pip install messagemedia-messages-sdk
+```
 
 ## :clapper: Get Started
 It's easy to get started. Simply enter the API Key and secret you obtained from the [MessageMedia Developers Portal](https://developers.messagemedia.com) into the code snippet below and a mobile number you wish to send to.
