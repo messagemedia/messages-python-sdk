@@ -117,6 +117,7 @@ body_value = '''{
             "content":"My first message",
             "destination_number":"YOUR_MOBILE_NUMBER",
             "format":"MMS",
+            "subject": "This is an MMS message",
             "media":["https://upload.wikimedia.org/wikipedia/commons/6/6a/L80385-flash-superhero-logo-1544.png"]
         }
     ]
