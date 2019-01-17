@@ -7,25 +7,18 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='messagemedia_messages_sdk',
-    version='1.1.3',
-    description='The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging '
-                'applications.',
+    name='message_media_messages',
+    version='2.0.0',
+    description='The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.',
+    long_description=long_description,
     author='MessageMedia Developers',
     author_email='developers@messagemedia.com',
-    url='https://developers.messagemedia.com/',
-    download_url='https://github.com/messagemedia/messages-python-sdk',
-	long_description=long_description,
-    license='Apache License 2.0',
+    url='https://developers.messagemedia.com',
     packages=find_packages(),
     install_requires=[
         'requests>=2.9.1, <3.0',
         'jsonpickle>=0.7.1, <1.0',
         'cachecontrol>=0.11.7, <1.0',
         'python-dateutil>=2.5.3, <3.0'
-    ],
-    tests_require=[
-        'nose>=1.3.7'
-    ],
-    test_suite='nose.collector'
+    ]
 )

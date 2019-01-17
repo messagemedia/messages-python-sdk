@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
-    message_media_messages.http.http_context
+    message_media_messages
 
+    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 
 class HttpContext(object):

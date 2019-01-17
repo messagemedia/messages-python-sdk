@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
 """
-    message_media_messages.models.cancel_scheduled_message_request
+    message_media_messages
 
+    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 
 
 class CancelScheduledMessageRequest(object):
 
-    """
-    Implementation of the 'Cancel scheduled message request' model.
+    """Implementation of the 'Cancel scheduled message request' model.
 
     TODO: type model description here.
 
@@ -20,23 +20,21 @@ class CancelScheduledMessageRequest(object):
 
     # Create a mapping from Model property names to API property names
     _names = {
-        "status": "status"
+        "status":'status'
     }
 
     def __init__(self,
-                 status=None):
-        """
-        Constructor for the CancelScheduledMessageRequest class
-        """
+                 status='cancelled'):
+        """Constructor for the CancelScheduledMessageRequest class"""
 
         # Initialize members of the class
         self.status = status
 
+
     @classmethod
     def from_dictionary(cls,
                         dictionary):
-        """
-        Creates an instance of this model from a dictionary
+        """Creates an instance of this model from a dictionary
 
         Args:
             dictionary (dictionary): A dictionary representation of the object as
@@ -51,7 +49,9 @@ class CancelScheduledMessageRequest(object):
             return None
 
         # Extract variables from the dictionary
-        status = dictionary.get("status")
+        status = dictionary.get("status") if dictionary.get("status") else 'cancelled'
 
         # Return an object of this model
         return cls(status)
+
+

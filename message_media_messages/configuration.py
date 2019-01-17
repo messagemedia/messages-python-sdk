@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
 """
-   message_media_messages.configuration
+    message_media_messages
 
+    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
-import sys
-import logging
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+from message_media_messages.api_helper import APIHelper
 
 
 class Configuration(object):
@@ -28,11 +27,11 @@ class Configuration(object):
 
     # The username to use with basic authentication
     # TODO: Set an appropriate value
-    basic_auth_user_name = "TODO: Replace"
+    basic_auth_user_name = 'TODO: Replace'
 
     # The password to use with basic authentication
     # TODO: Set an appropriate value
-    basic_auth_password = "TODO: Replace"
+    basic_auth_password = 'TODO: Replace'
 
     # The username to use with HMAC authentication
     # TODO: Set an appropriate value
@@ -41,4 +40,3 @@ class Configuration(object):
     # The password to use with HMAC authentication
     # TODO: Set an appropriate value
     hmac_auth_password = None
-

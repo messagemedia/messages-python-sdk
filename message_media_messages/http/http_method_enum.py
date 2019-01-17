@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
-    message_media_messages.http.http_method_enum
+    message_media_messages
 
-
+    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 
 class HttpMethodEnum(object):
@@ -29,14 +29,20 @@ class HttpMethodEnum(object):
 
     DELETE = "DELETE"
 
+    HEAD = "HEAD"
+
     @classmethod
     def to_string(cls, val):
-        # Returns the string equivalent for the Enum.
+        """Returns the string equivalent for the Enum.
+
+        """
         for k, v in list(vars(cls).items()):
             if v == val:
                 return k
 
     @classmethod
-    def from_string(cls, string):
-        # Creates an instance of the Enum from a given string.
-        return getattr(cls, string.upper(), None)
+    def from_string(cls, str):
+        """Creates an instance of the Enum from a given string.
+
+        """
+        return getattr(cls, str.upper(), None)

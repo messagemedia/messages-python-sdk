@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 """
-    message_media_messages.http.http_request
+    message_media_messages
 
+    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
-from ..api_helper import APIHelper
+
+from message_media_messages.api_helper import APIHelper
 
 
 class HttpRequest(object):
@@ -30,8 +32,7 @@ class HttpRequest(object):
                  query_parameters=None,
                  parameters=None,
                  files=None):
-        """
-        Constructor for the HttpRequest class
+        """Constructor for the HttpRequest class
 
         Args:
             http_method (HttpMethodEnum): The HTTP Method.
@@ -50,36 +51,33 @@ class HttpRequest(object):
         self.files = files
 
     def add_header(self, name, value):
-        """
-        Add a header to the HttpRequest.
+        """ Add a header to the HttpRequest.
 
         Args:
-            name: The name of the header.
-            value: The value of the header.
+	        name (string): The name of the header.
+            value (string): The value of the header.
 
         """
         self.headers[name] = value
 
     def add_parameter(self, name, value):
-        """
-        Add a parameter to the HttpRequest.
+        """ Add a parameter to the HttpRequest.
 
         Args:
-            name: The name of the parameter.
-            value: The value of the parameter.
+	        name (string): The name of the parameter.
+            value (string): The value of the parameter.
 
         """
         self.parameters[name] = value
 
     def add_query_parameter(self, name, value):
-        """
-        Add a query parameter to the HttpRequest.
+        """ Add a query parameter to the HttpRequest.
 
         Args:
-            name: The name of the query parameter.
-            value: The value of the query parameter.
+	        name (string): The name of the query parameter.
+            value (string): The value of the query parameter.
 
         """
         self.query_url = APIHelper.append_url_with_query_parameters(self.query_url,
-                                                                    {name: value})
+                                                                    {name:value})
         self.query_url = APIHelper.clean_url(self.query_url)
