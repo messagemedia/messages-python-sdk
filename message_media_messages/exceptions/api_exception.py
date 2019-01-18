@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 """
-   message_media_messages.exceptions.api_exception
+    message_media_messages
 
+    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 
-
 class APIException(Exception):
+
     """Class that handles HTTP Exceptions when fetching API Endpoints.
 
     Attributes:

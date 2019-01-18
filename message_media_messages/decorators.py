@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
 """
-   message_media_messages.decorators
+    message_media_messages
 
+    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 
+class lazy_property(object):
 
-class LazyProperty(object):
-
-    """
-    A decorator class for lazy instantiation.
-    """
+    """A decorator class for lazy instantiation."""
 
     def __init__(self, fget):
         self.fget = fget

@@ -1,28 +1,23 @@
 # -*- coding: utf-8 -*-
 
 """
-    message_media_messages.controllers.delivery_reports_controller
+    message_media_messages
 
+    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 
-import logging
-from .base_controller import BaseController
-from ..api_helper import APIHelper
-from ..configuration import Configuration
-from ..models.check_delivery_reports_response import CheckDeliveryReportsResponse
-from ..exceptions.api_exception import APIException
-
+from message_media_messages.api_helper import APIHelper
+from message_media_messages.configuration import Configuration
+from message_media_messages.controllers.base_controller import BaseController
+from message_media_messages.http.auth.auth_manager import AuthManager
+from message_media_messages.models.check_delivery_reports_response import CheckDeliveryReportsResponse
 
 class DeliveryReportsController(BaseController):
 
     """A Controller to access Endpoints in the message_media_messages API."""
 
-    def __init__(self, client=None, call_back=None):
-        super(DeliveryReportsController, self).__init__(client, call_back)
-        self.logger = logging.getLogger(__name__)
 
-    def get_check_delivery_reports(self,
-                                   account_header=None):
+    def check_delivery_reports(self):
         """Does a GET request to /v1/delivery_reports.
 
         Check for any delivery reports that have been received.
@@ -108,12 +103,9 @@ class DeliveryReportsController(BaseController):
         messages rather than
         polling the check delivery reports endpoint.*
 
-        Args:
-            account_header:  TODO: type description
-                here. Example:
-
         Returns:
-            CheckDeliveryReportsResponse: Response from the API. 
+            CheckDeliveryReportsResponse: Response from the API. Unconfirmed
+                reports
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -122,41 +114,29 @@ class DeliveryReportsController(BaseController):
                 the request.
 
         """
-        try:
-            self.logger.info('get_check_delivery_reports called.')
-    
-            # Prepare query URL
-            self.logger.info('Preparing query URL for get_check_delivery_reports.')
-            url = '/v1/delivery_reports'
-            _query_builder = Configuration.base_uri
-            _query_builder += url
-            _query_url = APIHelper.clean_url(_query_builder)
-    
-            # Prepare headers
-            self.logger.info('Preparing headers for get_check_delivery_reports.')
-            _headers = {
-                'accept': 'application/json'
-            }
 
-            self.add_account_header(_headers, account_header)
+        # Prepare query URL
+        _url_path = '/v1/delivery_reports'
+        _query_builder = Configuration.base_uri
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
 
-            # Prepare and execute request
-            self.logger.info('Preparing and executing request for get_check_delivery_reports.')
-            _request = self.http_client.get(_query_url, headers=_headers)
-            self.apply_authentication(_request, url)
-            _context = self.execute_request(_request, name='get_check_delivery_reports')
-            self.validate_response(_context)
-    
-            # Return appropriate type
-            return APIHelper.json_deserialize(_context.response.raw_body, CheckDeliveryReportsResponse.from_dictionary)
+        # Prepare headers
+        _headers = {
+            'accept': 'application/json'
+        }
 
-        except Exception as e:
-            self.logger.error(e, exc_info=True)
-            raise
+        # Prepare and execute request
+        _request = self.http_client.get(_query_url, headers=_headers)
+        AuthManager.apply(_request, _url_path)
+        _context = self.execute_request(_request)
+        self.validate_response(_context)
 
-    def create_confirm_delivery_reports_as_received(self,
-                                                    body,
-                                                    account_header=None):
+        # Return appropriate type
+        return APIHelper.json_deserialize(_context.response.raw_body, CheckDeliveryReportsResponse.from_dictionary)
+
+    def confirm_delivery_reports_as_received(self,
+                                             body):
         """Does a POST request to /v1/delivery_reports/confirmed.
 
         Mark a delivery report as confirmed so it is no longer return in check
@@ -185,11 +165,10 @@ class DeliveryReportsController(BaseController):
         Args:
             body (ConfirmDeliveryReportsAsReceivedRequest): TODO: type
                 description here. Example: 
-            account_header:  TODO: type description
-                here. Example:
 
         Returns:
-            mixed: Response from the API. 
+            mixed: Response from the API. Requested delivery reports will be
+                marked as confirmed
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -198,42 +177,24 @@ class DeliveryReportsController(BaseController):
                 the request.
 
         """
-        try:
-            self.logger.info('create_confirm_delivery_reports_as_received called.')
-    
-            # Prepare query URL
-            self.logger.info('Preparing query URL for create_confirm_delivery_reports_as_received.')
-            url = '/v1/delivery_reports/confirmed'
-            _query_builder = Configuration.base_uri
-            _query_builder += url
-            _query_url = APIHelper.clean_url(_query_builder)
 
-            json_body = APIHelper.json_serialize(body)
+        # Prepare query URL
+        _url_path = '/v1/delivery_reports/confirmed'
+        _query_builder = Configuration.base_uri
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
 
-            # Prepare headers
-            self.logger.info('Preparing headers for create_confirm_delivery_reports_as_received.')
-            _headers = {
-                'accept': 'application/json',
-                'content-type': 'application/json; charset=utf-8'
-            }
+        # Prepare headers
+        _headers = {
+            'accept': 'application/json',
+            'content-type': 'application/json; charset=utf-8'
+        }
 
-            self.add_account_header(_headers, account_header)
+        # Prepare and execute request
+        _request = self.http_client.post(_query_url, headers=_headers, parameters=APIHelper.json_serialize(body))
+        AuthManager.apply(_request, _url_path, APIHelper.json_serialize(body))
+        _context = self.execute_request(_request)
+        self.validate_response(_context)
 
-            # Prepare and execute request
-            self.logger.info('Preparing and executing request for create_confirm_delivery_reports_as_received.')
-            _request = self.http_client.post(_query_url, headers=_headers, parameters=json_body)
-            self.apply_authentication(_request, url, json_body)
-            _context = self.execute_request(_request, name='create_confirm_delivery_reports_as_received')
-
-            # Endpoint and global error handling using HTTP status codes.
-            self.logger.info('Validating response for create_confirm_delivery_reports_as_received.')
-            if _context.response.status_code == 400:
-                raise APIException('', _context)
-            self.validate_response(_context)
-    
-            # Return appropriate type
-            return APIHelper.json_deserialize(_context.response.raw_body)
-
-        except Exception as e:
-            self.logger.error(e, exc_info=True)
-            raise
+        # Return appropriate type
+        return APIHelper.json_deserialize(_context.response.raw_body)

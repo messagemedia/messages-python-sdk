@@ -1,115 +1,27 @@
 # -*- coding: utf-8 -*-
 
 """
-    message_media_messages.controllers.messages_controller
+    message_media_messages
 
+    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 
-import logging
-from .base_controller import BaseController
-from ..api_helper import APIHelper
-from ..configuration import Configuration
-from ..models.send_messages_response import SendMessagesResponse
-from ..exceptions.api_exception import APIException
-
+from message_media_messages.api_helper import APIHelper
+from message_media_messages.configuration import Configuration
+from message_media_messages.controllers.base_controller import BaseController
+from message_media_messages.http.auth.auth_manager import AuthManager
+from message_media_messages.models.get_message_status_response import GetMessageStatusResponse
+from message_media_messages.models.send_messages_response import SendMessagesResponse
+from message_media_messages.exceptions.api_exception import APIException
+from message_media_messages.exceptions.send_messages_400_response_exception import SendMessages400ResponseException
 
 class MessagesController(BaseController):
 
     """A Controller to access Endpoints in the message_media_messages API."""
 
-    def __init__(self, client=None, call_back=None):
-        super(MessagesController, self).__init__(client, call_back)
-        self.logger = logging.getLogger(__name__)
-
-    def update_cancel_scheduled_message(self,
-                                        message_id,
-                                        body,
-                                        account_header=None):
-        """Does a PUT request to /v1/messages/{messageId}.
-
-        Cancel a scheduled message that has not yet been delivered.
-        A scheduled message can be cancelled by updating the status of a
-        message from ```scheduled```
-        to ```cancelled```. This is done by submitting a PUT request to the
-        messages endpoint using
-        the message ID as a parameter (the same endpoint used above to
-        retrieve the status of a message).
-        The body of the request simply needs to contain a ```status```
-        property with the value set
-        to ```cancelled```.
-        ```json
-        {
-            "status": "cancelled"
-        }
-        ```
-        *Note: Only messages with a status of scheduled can be cancelled. If
-        an invalid or non existent
-        message ID parameter is specified in the request, then a HTTP 404 Not
-        Found response will be 
-        returned*
-
-        Args:
-            message_id (string): TODO: type description here.
-            body (CancelScheduledMessageRequest): TODO: type description here.
-            account_header:  TODO: type description here.
-
-        Returns:
-            mixed: Response from the API. 
-
-        Raises:
-            APIException: When an error occurs while fetching the data from
-                the remote API. This exception includes the HTTP Response
-                code, an error message, and the HTTP body that was received in
-                the request.
-
-        """
-        try:
-            self.logger.info('update_cancel_scheduled_message called.')
-    
-            # Prepare query URL
-            self.logger.info('Preparing query URL for update_cancel_scheduled_message.')
-            url = '/v1/messages/{messageId}'
-            url = APIHelper.append_url_with_template_parameters(url, {
-                'messageId': message_id
-            })
-            _query_builder = Configuration.base_uri
-            _query_builder += url
-            _query_url = APIHelper.clean_url(_query_builder)
-    
-            # Prepare headers
-            self.logger.info('Preparing headers for update_cancel_scheduled_message.')
-            _headers = {
-                'accept': 'application/json',
-                'content-type': 'application/json; charset=utf-8'
-            }
-
-            self.add_account_header(_headers, account_header)
-
-            # Prepare and execute request
-            self.logger.info('Preparing and executing request for update_cancel_scheduled_message.')
-            json_body = APIHelper.json_serialize(body)
-            _request = self.http_client.post(_query_url, headers=_headers, parameters=json_body)
-            self.apply_authentication(_request, url, json_body)
-            _context = self.execute_request(_request, name='update_cancel_scheduled_message')
-
-            # Endpoint and global error handling using HTTP status codes.
-            self.logger.info('Validating response for update_cancel_scheduled_message.')
-            if _context.response.status_code == 400:
-                raise APIException('', _context)
-            elif _context.response.status_code == 404:
-                raise APIException('', _context)
-            self.validate_response(_context)
-    
-            # Return appropriate type
-            return APIHelper.json_deserialize(_context.response.raw_body)
-
-        except Exception as e:
-            self.logger.error(e, exc_info=True)
-            raise
 
     def get_message_status(self,
-                           message_id,
-                           account_header=None):
+                           message_id):
         """Does a GET request to /v1/messages/{messageId}.
 
         Retrieve the current status of a message using the message ID returned
@@ -130,7 +42,7 @@ class MessagesController(BaseController):
             "destination_number": "+61401760575",
             "scheduled": "2016-11-03T11:49:02.807Z",
             "source_number": "+61491570157",
-            "source_number_type": "INTERNATIONAL"
+            "source_number_type": "INTERNATIONAL",
             "message_expiry_timestamp": "2016-11-03T11:49:02.807Z",
             "status": "enroute"
         }
@@ -145,11 +57,10 @@ class MessagesController(BaseController):
 
         Args:
             message_id (string): TODO: type description here. Example: 
-            account_header:  TODO: type description
-                here. Example:
 
         Returns:
-            mixed: Response from the API. 
+            GetMessageStatusResponse: Response from the API. The submitted
+                message including the status of the message
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -158,53 +69,39 @@ class MessagesController(BaseController):
                 the request.
 
         """
-        try:
-            self.logger.info('get_message_status called.')
-    
-            # Prepare query URL
-            self.logger.info('Preparing query URL for get_message_status.')
-            url = '/v1/messages/{messageId}'
-            url = APIHelper.append_url_with_template_parameters(url, {
-                'messageId': message_id
-            })
 
-            _query_builder = Configuration.base_uri
-            _query_builder += url
-            _query_url = APIHelper.clean_url(_query_builder)
-    
-            # Prepare headers
-            self.logger.info('Preparing headers for get_message_status.')
-            _headers = {
-                'accept': 'application/json'
-            }
+        # Prepare query URL
+        _url_path = '/v1/messages/{messageId}'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, { 
+            'messageId': message_id
+        })
+        _query_builder = Configuration.base_uri
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
 
-            self.add_account_header(_headers, account_header)
+        # Prepare headers
+        _headers = {
+            'accept': 'application/json'
+        }
 
-            # Prepare and execute request
-            self.logger.info('Preparing and executing request for get_message_status.')
-            _request = self.http_client.get(_query_url, headers=_headers)
-            self.apply_authentication(_request, url)
-            _context = self.execute_request(_request, name='get_message_status')
+        # Prepare and execute request
+        _request = self.http_client.get(_query_url, headers=_headers)
+        AuthManager.apply(_request, _url_path)
+        _context = self.execute_request(_request)
 
-            # Endpoint and global error handling using HTTP status codes.
-            self.logger.info('Validating response for get_message_status.')
-            if _context.response.status_code == 404:
-                raise APIException('', _context)
-            self.validate_response(_context)
-    
-            # Return appropriate type
-            return APIHelper.json_deserialize(_context.response.raw_body)
+        # Endpoint and global error handling using HTTP status codes.
+        if _context.response.status_code == 404:
+            raise APIException('Resource not found', _context)
+        self.validate_response(_context)
 
-        except Exception as e:
-            self.logger.error(e, exc_info=True)
-            raise
+        # Return appropriate type
+        return APIHelper.json_deserialize(_context.response.raw_body, GetMessageStatusResponse.from_dictionary)
 
-    def create_send_messages(self,
-                             body,
-                             account_header=None):
+    def send_messages(self,
+                      body):
         """Does a POST request to /v1/messages.
 
-        Submit one or more (up to 100 per request) SMS or text to voice
+        Submit one or more (up to 100 per request) SMS, MMS or text to voice
         messages for delivery.
         The most basic message has the following structure:
         ```json
@@ -245,7 +142,7 @@ class MessagesController(BaseController):
           http://en.wikipedia.org/wiki/E.164.
           A destination number is required.
         - ```format``` The format specifies which format the message will be
-        sent as, ```SMS``` (text message)
+        sent as, ```SMS``` (text message), ```MMS``` (multimedia message)
           or ```TTS``` (text to speech). With ```TTS``` format, we will call
           the destination number and read out the
           message using a computer generated voice. Specifying a format is
@@ -254,10 +151,17 @@ class MessagesController(BaseController):
         message, this will be the number that
           the message appears from on the handset. By default this feature is
           _not_ available and will be ignored
-          in the request. Please contact <support@messagemeda.com> for more
+          in the request. Please contact <support@messagemedia.com> for more
           information. Specifying a source
           number is optional and a by default a source number will be assigned
           to the message.
+        - ```media``` The media is used to specify the url of the media file
+        that you are trying to send. Supported file formats include png, jpeg
+        and gif. ```format``` parameter must be set to ```MMS``` for this to
+        work.
+        - ```subject``` The subject field is used to denote subject of the MMS
+        message and has a maximum size of 64 characters long. Specifying a
+        subject is optional.
         - ```source_number_type``` If a source number is specified, the type
         of source number may also be
           specified. This is recommended when using a source address type that
@@ -313,11 +217,10 @@ class MessagesController(BaseController):
 
         Args:
             body (SendMessagesRequest): TODO: type description here. Example:
-            account_header:  TODO: type description
-                here. Example:
-
+                
         Returns:
-            SendMessagesResponse: Response from the API. 
+            SendMessagesResponse: Response from the API. Messages were
+                accepted for processing
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -326,41 +229,130 @@ class MessagesController(BaseController):
                 the request.
 
         """
-        try:
-            self.logger.info('create_send_messages called.')
-    
-            # Prepare query URL
-            self.logger.info('Preparing query URL for create_send_messages.')
-            url = '/v1/messages'
-            _query_builder = Configuration.base_uri
-            _query_builder += url
-            _query_url = APIHelper.clean_url(_query_builder)
-    
-            # Prepare headers
-            self.logger.info('Preparing headers for create_send_messages.')
-            _headers = {
-                'accept': 'application/json',
-                'content-type': 'application/json; charset=utf-8'
-            }
 
-            self.add_account_header(_headers, account_header)
+        # Prepare query URL
+        _url_path = '/v1/messages'
+        _query_builder = Configuration.base_uri
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
 
-            # Prepare and execute request
-            self.logger.info('Preparing and executing request for create_send_messages.')
-            json_body = APIHelper.json_serialize(body)
-            _request = self.http_client.post(_query_url, headers=_headers, parameters=json_body)
-            self.apply_authentication(_request, url, json_body)
-            _context = self.execute_request(_request, name='create_send_messages')
+        # Prepare headers
+        _headers = {
+            'accept': 'application/json',
+            'content-type': 'application/json; charset=utf-8'
+        }
 
-            # Endpoint and global error handling using HTTP status codes.
-            self.logger.info('Validating response for create_send_messages.')
-            if _context.response.status_code == 400:
-                raise APIException('', _context)
-            self.validate_response(_context)
-    
-            # Return appropriate type
-            return APIHelper.json_deserialize(_context.response.raw_body, SendMessagesResponse.from_dictionary)
+        # Prepare and execute request
+        _request = self.http_client.post(_query_url, headers=_headers, parameters=APIHelper.json_serialize(body))
+        AuthManager.apply(_request, _url_path, APIHelper.json_serialize(body))
+        _context = self.execute_request(_request)
 
-        except Exception as e:
-            self.logger.error(e, exc_info=True)
-            raise
+        # Endpoint and global error handling using HTTP status codes.
+        if _context.response.status_code == 400:
+            raise SendMessages400ResponseException('Unexpected error in API call. See HTTP response body for details.', _context)
+        self.validate_response(_context)
+
+        # Return appropriate type
+        return APIHelper.json_deserialize(_context.response.raw_body, SendMessagesResponse.from_dictionary)
+
+    def cancel_scheduled_message(self,
+                                 message_id,
+                                 body):
+        """Does a PUT request to /v1/messages/{messageId}.
+
+        Cancel a scheduled message that has not yet been delivered.
+        A scheduled message can be cancelled by updating the status of a
+        message from ```scheduled```
+        to ```cancelled```. This is done by submitting a PUT request to the
+        messages endpoint using
+        the message ID as a parameter (the same endpoint used above to
+        retrieve the status of a message).
+        The body of the request simply needs to contain a ```status```
+        property with the value set
+        to ```cancelled```.
+        ```json
+        {
+            "status": "cancelled"
+        }
+        ```
+        *Note: Only messages with a status of scheduled can be cancelled. If
+        an invalid or non existent
+        message ID parameter is specified in the request, then a HTTP 404 Not
+        Found response will be 
+        returned*
+
+        Args:
+            message_id (string): TODO: type description here. Example: 
+            body (CancelScheduledMessageRequest): TODO: type description here.
+                Example: 
+
+        Returns:
+            mixed: Response from the API. Message status updated successfully
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/v1/messages/{messageId}'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, { 
+            'messageId': message_id
+        })
+        _query_builder = Configuration.base_uri
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare headers
+        _headers = {
+            'accept': 'application/json',
+            'content-type': 'application/json; charset=utf-8'
+        }
+
+        # Prepare and execute request
+        _request = self.http_client.put(_query_url, headers=_headers, parameters=APIHelper.json_serialize(body))
+        AuthManager.apply(_request, _url_path, APIHelper.json_serialize(body))
+        _context = self.execute_request(_request)
+        self.validate_response(_context)
+
+        # Return appropriate type
+        return APIHelper.json_deserialize(_context.response.raw_body)
+
+    def check_credits_remaining(self):
+        """Does a GET request to /v1/messaging/credits.
+
+        TODO: type endpoint description here.
+
+        Returns:
+            mixed: Response from the API. 
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/v1/messaging/credits'
+        _query_builder = Configuration.base_uri
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare headers
+        _headers = {
+            'accept': 'application/json'
+        }
+
+        # Prepare and execute request
+        _request = self.http_client.get(_query_url, headers=_headers)
+        AuthManager.apply(_request, _url_path)
+        _context = self.execute_request(_request)
+        self.validate_response(_context)
+
+        # Return appropriate type
+        return APIHelper.json_deserialize(_context.response.raw_body)
