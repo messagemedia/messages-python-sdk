@@ -112,10 +112,14 @@ class Message(object):
             return None
 
         # Extract variables from the dictionary
-        content = dictionary.get('content')
-        destination_number = dictionary.get('destination_number')
+        attributes = ['callback_url', 'content', 'destination_number', 'delivery_report', 'format', 'message_expiry_timestamp',
+         'metadata', 'scheduled', 'source_number', 'source_number_type', 'message_id', 'status', 'media', 'subject']
+
+        msg_dictionary = dict()
+        for key, value in  dictionary.items():
+            if key in attributes:
+                msg_dictionary[key] = value
 
 
         # Return an object of this model
-        return cls(content,
-                   destination_number)
+        return cls(**msg_dictionary)
