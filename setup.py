@@ -8,7 +8,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='message_media_messages',
-    version='2.0.0',
+    version='2.1.0',
     description='The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.',
     long_description=long_description,
     author='MessageMedia Developers',
