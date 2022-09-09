@@ -1,262 +1,137 @@
 
-# MessageMedia Messages Python SDK
-[![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
-[![HitCount](http://hits.dwyl.io/messagemedia/messages-python-sdk.svg)](http://hits.dwyl.io/messagemedia/messages-python-sdk)
-[![PyPI](https://badge.fury.io/py/messagemedia-messages-sdk.svg)](https://pypi.python.org/pypi/messagemedia-messages-sdk)
+# Getting Started with Messages
 
-The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.
+## Introduction
 
-![Isometric](https://i.imgur.com/jJeHwf5.png)
+TODO: Add a description
 
-## Table of Contents
-* [Authentication](#closed_lock_with_key-authentication)
-* [Errors](#interrobang-errors)
-* [Information](#newspaper-information)
-  * [Slack and Mailing List](#slack-and-mailing-list)
-  * [Bug Reports](#bug-reports)
-  * [Contributing](#contributing)
-* [Installation](#star-installation)
-* [Get Started](#clapper-get-started)
-* [API Documentation](#closed_book-api-documentation)
-* [Need help?](#confused-need-help)
-* [License](#page_with_curl-license)
+## Building
 
-## :closed_lock_with_key: Authentication
+You must have Python `3 >=3.7, <= 3.9` installed on your system to install and run this SDK. This SDK package depends on other Python packages like nose, jsonpickle etc. These dependencies are defined in the `requirements.txt` file that comes with the SDK. To resolve these dependencies, you can use the PIP Dependency manager. Install it by following steps at [https://pip.pypa.io/en/stable/installing/](https://pip.pypa.io/en/stable/installing/).
 
-Authentication is done via API keys. Sign up at https://developers.messagemedia.com/register/ to get your API keys.
+Python and PIP executables should be defined in your PATH. Open command prompt and type `pip --version`. This should display the version of the PIP Dependency Manager installed if your installation was successful and the paths are properly defined.
 
-Requests are authenticated using HTTP Basic Auth or HMAC. For Basic Auth, your API key will be basicAuthUserName and API secret will be basicAuthPassword. For HMAC, your API key will be hmacAuthUserName and API secret will be hmacAuthPassword. This is demonstrated in the [Send an SMS example](https://github.com/messagemedia/messages-python-sdk/blob/master/README.md#send-an-sms) below.
+* Using command line, navigate to the directory containing the generated files (including `requirements.txt`) for the SDK.
+* Run the command `pip install -r requirements.txt`. This should install all the required dependencies.
 
-## :interrobang: Errors
+![Building SDK - Step 1](https://apidocs.io/illustration/python?workspaceFolder=Messages-Python&step=installDependencies)
 
-Our API returns standard HTTP success or error status codes. For errors, we will also include extra information about what went wrong encoded in the response as JSON. The most common status codes are listed below.
+## Installation
 
-#### HTTP Status Codes
+The following section explains how to use the messages library in a new project.
 
-| Code      | Title       | Description |
-|-----------|-------------|-------------|
-| 400 | Invalid Request | The request was invalid |
-| 401 | Unauthorized | Your API credentials are invalid |
-| 403 | Disabled feature | Feature not enabled |
-| 404 | Not Found |	The resource does not exist |
-| 50X | Internal Server Error | An error occurred with our API |
+### 1. Open Project in an IDE
 
-## :newspaper: Information
+Open up a Python IDE like PyCharm. The basic workflow presented here is also applicable if you prefer using a different editor or IDE.
 
-#### Slack and Mailing List
+![Open project in PyCharm - Step 1](https://apidocs.io/illustration/python?workspaceFolder=Messages-Python&step=pyCharm)
 
-If you have any questions, comments, or concerns, please join our Slack channel:
-https://developers.messagemedia.com/collaborate/slack/
+Click on `Open` in PyCharm to browse to your generated SDK directory and then click `OK`.
 
-Alternatively you can email us at:
-developers@messagemedia.com
+![Open project in PyCharm - Step 2](https://apidocs.io/illustration/python?workspaceFolder=Messages-Python&step=openProject0)
 
-#### Bug reports
+The project files will be displayed in the side bar as follows:
 
-If you discover a problem with the SDK, we would like to know about it. You can raise an [issue](https://github.com/messagemedia/signingkeys-nodejs-sdk/issues) or send an email to: developers@messagemedia.com
+![Open project in PyCharm - Step 3](https://apidocs.io/illustration/python?workspaceFolder=Messages-Python&projectName=messages&step=openProject1)
 
-#### Contributing
+### 2. Add a new Test Project
 
-We welcome your thoughts on how we could best provide you with SDKs that would simplify how you consume our services in your application. You can fork and create pull requests for any features you would like to see or raise an [issue](https://github.com/messagemedia/messages-python-sdk/issues). Please be aware that a large share of the files are auto-generated by our backend tool.
+Create a new directory by right clicking on the solution name as shown below:
 
-## :star: Installation
-Run the following command to install the SDK via pip:
-```
-pip install messagemedia-messages-sdk
-```
+![Add a new project in PyCharm - Step 1](https://apidocs.io/illustration/python?workspaceFolder=Messages-Python&projectName=messages&step=createDirectory)
 
-## :clapper: Get Started
-It's easy to get started. Simply enter the API Key and secret you obtained from the [MessageMedia Developers Portal](https://developers.messagemedia.com) into the code snippet below and a mobile number you wish to send to.
+Name the directory as "test".
 
-### Send an SMS
-Destination (`destinationNumber`) and source number (`sourceNumber`) should be in the [E.164](http://en.wikipedia.org/wiki/E.164) format. For example, `+61491570156` NOT `0491570156`. The code snippet below comprises of only the bare minimum parameters required to send a message. You can view the full list of parameters over [here](https://github.com/messagemedia/messages-python-sdk/wiki/Message-Body-Parameters). Alternatively, you can refer [this](https://github.com/messagemedia/messages-python-sdk/blob/master/examples/sendMessage.py) code snippet with all the parameters in use.
+![Add a new project in PyCharm - Step 2](https://apidocs.io/illustration/python?workspaceFolder=Messages-Python&step=nameDirectory)
+
+Add a python file to this project.
+
+![Add a new project in PyCharm - Step 3](https://apidocs.io/illustration/python?workspaceFolder=Messages-Python&projectName=messages&step=createFile)
+
+Name it "testSDK".
+
+![Add a new project in PyCharm - Step 4](https://apidocs.io/illustration/python?workspaceFolder=Messages-Python&projectName=messages&step=nameFile)
+
+In your python file you will be required to import the generated python library using the following code lines
 
 ```python
-from message_media_messages.message_media_messages_client import MessageMediaMessagesClient
-from message_media_messages.models.send_messages_request import SendMessagesRequest
-from message_media_messages.models.message import Message
-from message_media_messages.models.format_enum import FormatEnum
-from message_media_messages.models.source_number_type_enum import SourceNumberTypeEnum
-from message_media_messages.models.status_enum import StatusEnum
-from message_media_messages.exceptions.send_messages_400_response_exception import SendMessages400ResponseException
-from message_media_messages.exceptions.api_exception import APIException
-import dateutil.parser
-import jsonpickle
-
-auth_user_name = 'API_KEY'
-auth_password = 'API_SECRET'
-use_hmac_authentication = False
-
-client = MessageMediaMessagesClient(auth_user_name, auth_password, use_hmac_authentication)
-
-messages_controller = client.messages
-body = SendMessagesRequest()
-body.messages = []
-
-body.messages.append(Message())
-body.messages[0].content = 'My first message'
-body.messages[0].destination_number = '+61491570156'
-
-try:
-    result = messages_controller.send_messages(body)
-    print(result)
-except SendMessages400ResponseException as e:
-    print(e)
-except APIException as e:
-    print(e)
+from messages.messages_client import MessagesClient
 ```
 
-### Send an MMS
-Destination (`destinationNumber`) and source number (`sourceNumber`) should be in the [E.164](http://en.wikipedia.org/wiki/E.164) format. For example, `+61491570156` NOT `0491570156`. The code snippet below comprises of only the bare minimum parameters required to send a message. You can view the full list of parameters over [here](https://github.com/messagemedia/messages-python-sdk/wiki/Message-Body-Parameters). Alternatively, you can refer [this](https://github.com/messagemedia/messages-python-sdk/blob/master/examples/sendMessage.py) code snippet with all the parameters in use.
+![Add a new project in PyCharm - Step 5](https://apidocs.io/illustration/python?workspaceFolder=Messages-Python&projectName=messages&libraryName=messages.messages_client&className=MessagesClient&step=projectFiles)
+
+After this you can write code to instantiate an API client object, get a controller object and  make API calls. Sample code is given in the subsequent sections.
+
+### 3. Run the Test Project
+
+To run the file within your test project, right click on your Python file inside your Test project and click on `Run`
+
+![Run Test Project - Step 1](https://apidocs.io/illustration/python?workspaceFolder=Messages-Python&projectName=messages&libraryName=messages.messages_client&className=MessagesClient&step=runProject)
+
+## Test the SDK
+
+You can test the generated SDK and the server with test cases. `unittest` is used as the testing framework and `nose` is used as the test runner. You can run the tests as follows:
+
+Navigate to the root directory of the SDK and run the following commands
+
+```
+pip install -r test-requirements.txt
+nosetests
+```
+
+## Initialize the API Client
+
+**_Note:_** Documentation for the client can be found [here.](doc/client.md)
+
+The following parameters are configurable for the API Client:
+
+| Parameter | Type | Description |
+|  --- | --- | --- |
+| `http_client_instance` | `HttpClient` | The Http Client passed from the sdk user for making requests |
+| `override_http_client_configuration` | `bool` | The value which determines to override properties of the passed Http Client from the sdk user |
+| `http_call_back` | `HttpCallBack` | The callback value that is invoked before and after an HTTP call is made to an endpoint |
+| `timeout` | `float` | The value to use for connection timeout. <br> **Default: 60** |
+| `max_retries` | `int` | The number of times to retry an endpoint call if it fails. <br> **Default: 0** |
+| `backoff_factor` | `float` | A backoff factor to apply between attempts after the second try. <br> **Default: 2** |
+| `retry_statuses` | `Array of int` | The http statuses on which retry is to be done. <br> **Default: [408, 413, 429, 500, 502, 503, 504, 521, 522, 524]** |
+| `retry_methods` | `Array of string` | The http methods on which retry is to be done. <br> **Default: ['GET', 'PUT']** |
+| `basic_auth_user_name` | `string` | The username to use with basic authentication |
+| `basic_auth_password` | `string` | The password to use with basic authentication |
+
+The API client can be initialized as follows:
 
 ```python
-from message_media_messages.message_media_messages_client import MessageMediaMessagesClient
-from message_media_messages.models.send_messages_request import SendMessagesRequest
-from message_media_messages.models.message import Message
-from message_media_messages.models.format_enum import FormatEnum
-from message_media_messages.models.source_number_type_enum import SourceNumberTypeEnum
-from message_media_messages.models.status_enum import StatusEnum
-from message_media_messages.exceptions.send_messages_400_response_exception import SendMessages400ResponseException
-from message_media_messages.exceptions.api_exception import APIException
-import dateutil.parser
-import jsonpickle
+from messages.messages_client import MessagesClient
+from messages.configuration import Environment
 
-auth_user_name = 'API_KEY'
-auth_password = 'API_SECRET'
-use_hmac_authentication = False
-
-client = MessageMediaMessagesClient(auth_user_name, auth_password, use_hmac_authentication)
-
-messages_controller = client.messages
-body = SendMessagesRequest()
-body.messages = []
-
-body.messages[0].content = 'My second message'
-body.messages[0].destination_number = '+61491570158'
-body.messages[0].format = FormatEnum.MMS
-body.messages[0].media = ['https://images.pexels.com/photos/1018350/pexels-photo-1018350.jpeg?cs=srgb&dl=architecture-buildings-city-1018350.jpg']
-body.messages[0].subject = 'This is an MMS message'
-
-try:
-    result = messages_controller.send_messages(body)
-    print(result)
-except SendMessages400ResponseException as e:
-    print(e)
-except APIException as e:
-    print(e)
+client = MessagesClient(
+    basic_auth_user_name='BasicAuthUserName',
+    basic_auth_password='BasicAuthPassword',
+    environment=Environment.PRODUCTION,)
 ```
 
-### Get Status of a Message
-You can get a messsage ID from a sent message by looking at the `message_id` from the response of the above example.
-```python
-from message_media_messages.message_media_messages_client import MessageMediaMessagesClient
-from message_media_messages.exceptions.api_exception import APIException
+## Authorization
 
-auth_user_name = 'API_KEY'
-auth_password = 'API_SECRET'
-use_hmac_authentication = False
+This API uses `Basic Authentication`.
 
-client = MessageMediaMessagesClient(auth_user_name, auth_password, use_hmac_authentication)
+## API Errors
 
-messages_controller = client.messages
-message_id = '877c19ef-fa2e-4cec-827a-e1df9b5509f7'
+Here is the list of errors that the API might throw.
 
-try:
-    result = messages_controller.get_message_status(message_id)
-    print(result)
-except APIException as e:
-    print(e)
-```
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 402 | The feature that you are trying to use is disabled by default. Please contact tech support at support@messagemedia.com.au | `APIException` |
+| 404 | The specified resource does not exist. | `APIException` |
 
-### Get replies to a message
-You can check for replies that are sent to your messages
-```python
-from message_media_messages.message_media_messages_client import MessageMediaMessagesClient
-from message_media_messages.exceptions.api_exception import APIException
+## List of APIs
 
-auth_user_name = 'API_KEY'
-auth_password = 'API_SECRET'
-use_hmac_authentication = False
+* [Delivery Reports](doc/controllers/delivery-reports.md)
+* [Messages](doc/controllers/messages.md)
+* [Replies](doc/controllers/replies.md)
 
-client = MessageMediaMessagesClient(auth_user_name, auth_password, use_hmac_authentication)
+## Classes Documentation
 
-replies_controller = client.replies
-try:
-    result = replies_controller.check_replies()
-    print(result)
-except APIException as e:
-    print(e)
-```
+* [Utility Classes](doc/utility-classes.md)
+* [HttpResponse](doc/http-response.md)
+* [HttpRequest](doc/http-request.md)
 
-### Check Delivery Reports
-This endpoint allows you to check for delivery reports to inbound and outbound messages.
-```python
-from message_media_messages.message_media_messages_client import MessageMediaMessagesClient
-from message_media_messages.exceptions.api_exception import APIException
-
-auth_user_name = 'API_KEY'
-auth_password = 'API_SECRET'
-use_hmac_authentication = False
-
-client = MessageMediaMessagesClient(auth_user_name, auth_password, use_hmac_authentication)
-
-delivery_reports_controller = client.delivery_reports
-try:
-    result = delivery_reports_controller.check_delivery_reports()
-    print(result)
-except APIException as e:
-    print(e)
-```
-
-### Confirm Delivery Reports
-This endpoint allows you to mark delivery reports as confirmed so they're no longer returned by the Check Delivery Reports function.
-```python
-from message_media_messages.message_media_messages_client import MessageMediaMessagesClient
-from message_media_messages.models.confirm_delivery_reports_as_received_request import ConfirmDeliveryReportsAsReceivedRequest
-from message_media_messages.exceptions.api_exception import APIException
-
-auth_user_name = 'API_KEY'
-auth_password = 'API_SECRET'
-use_hmac_authentication = False
-
-client = MessageMediaMessagesClient(auth_user_name, auth_password, use_hmac_authentication)
-
-delivery_reports_controller = client.delivery_reports
-body = ConfirmDeliveryReportsAsReceivedRequest()
-body.delivery_report_ids = ['011dcead-6988-4ad6-a1c7-6b6c68ea628d', '3487b3fa-6586-4979-a233-2d1b095c7718', 'ba28e94b-c83d-4759-98e7-ff9c7edb87a1']
-
-try:
-    result = delivery_reports_controller.confirm_delivery_reports_as_received(body)
-    print(result)
-except APIException as e:
-    print(e)
-```
-
-###  Check credits remaining (Prepaid accounts only)
-This endpoint allows you to check for credits remaining on your prepaid account.
-```python
-from message_media_messages.message_media_messages_client import MessageMediaMessagesClient
-from message_media_messages.exceptions.api_exception import APIException
-
-auth_user_name = 'API_KEY'
-auth_password = 'API_SECRET'
-use_hmac_authentication = False
-
-client = MessageMediaMessagesClient(auth_user_name, auth_password, use_hmac_authentication)
-
-messages_controller = client.messages
-try:
-    result = messages_controller.check_credits_remaining()
-    print(result)
-except APIException as e:
-    print(e)
-```
-
-## :closed_book: API Reference Documentation
-Check out the [full API documentation](https://developers.messagemedia.com/code/messages-api-documentation/) for more detailed information.
-
-## :confused: Need help?
-Please contact developer support at developers@messagemedia.com or check out the developer portal at [developers.messagemedia.com](https://developers.messagemedia.com/)
-
-## :page_with_curl: License
-Apache License. See the [LICENSE](LICENSE) file.

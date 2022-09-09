@@ -1,25 +1,34 @@
-from setuptools import setup, find_packages
-from codecs import open
-from os import path
-here = path.abspath(path.dirname(__file__))
+# -*- coding: utf-8 -*-
 
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
+import sys
+from setuptools import setup, find_packages
+
+if sys.version_info[0] < 3:
+    with open('README.md', 'r') as fh:
+        long_description = fh.read()
+else:
+    with open('README.md', 'r', encoding='utf-8') as fh:
+        long_description = fh.read()
 
 setup(
-    name='messagemedia-messages-sdk',
-    version='2.1.0',
-    description='The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.',
-    long_description_content_type="text/markdown",
+    name='messages',
+    version='1.1.0',
+    description='TODO: Add a description',
     long_description=long_description,
-    author='MessageMedia Developers',
-    author_email='developers@messagemedia.com',
-    url='https://developers.messagemedia.com',
+    long_description_content_type="text/markdown",
+    author='APIMatic SDK Generator',
+    author_email='support@apimatic.io',
+    url='https://apimatic.io',
     packages=find_packages(),
     install_requires=[
-        'requests>=2.9.1, <3.0',
-        'jsonpickle>=0.7.1, <1.0',
-        'cachecontrol>=0.11.7, <1.0',
-        'python-dateutil>=2.5.3, <3.0'
-    ]
+        'jsonpickle~=1.4, >= 1.4.1',
+        'requests~=2.25',
+        'cachecontrol~=0.12.6',
+        'python-dateutil~=2.8.1',
+        'enum34~=1.1, >=1.1.10'
+    ],
+    tests_require=[
+        'nose>=1.3.7'
+    ],
+    test_suite = 'nose.collector'
 )
