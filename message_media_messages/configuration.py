@@ -7,6 +7,7 @@
 """
 
 from message_media_messages.api_helper import APIHelper
+import os
 
 
 class Configuration(object):
@@ -35,8 +36,8 @@ class Configuration(object):
 
     # The username to use with HMAC authentication
     # TODO: Set an appropriate value
-    hmac_auth_user_name = None
+    hmac_auth_user_name = os.environ.get('AUTHUSERNAME')
 
     # The password to use with HMAC authentication
     # TODO: Set an appropriate value
-    hmac_auth_password = None
+    hmac_auth_password = os.environ.get('AUTHPASSWORD')

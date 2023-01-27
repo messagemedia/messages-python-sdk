@@ -97,6 +97,7 @@ class MessagesController(BaseController):
         # Return appropriate type
         return APIHelper.json_deserialize(_context.response.raw_body, GetMessageStatusResponse.from_dictionary)
 
+#Method to be tested
     def send_messages(self,
                       body):
         """Does a POST request to /v1/messages.
