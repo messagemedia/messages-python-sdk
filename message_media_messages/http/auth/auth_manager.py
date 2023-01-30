@@ -82,17 +82,17 @@ class AuthManager:
             content_hash = m.hexdigest()
             content_signature = "x-Content-MD5: {}\n".format(content_hash)
             content_header = "x-Content-MD5 "
-            http_request.headers["date"] = date_header
-
             http_request.headers["x-Content-MD5"] = content_hash
 
-            hmac_signature = AuthManager.create_signature(date_header,
-                                                          content_signature,
-                                                          url,
-                                                          request_type)
+        http_request.headers["date"] = date_header
 
-        joined = 'username="{}", algorithm="hmac-sha1", headers="date {}' \
-                 'request-line", signature="{}"' \
+        hmac_signature = AuthManager.create_signature(date_header,
+                                                      content_signature,
+                                                      url,
+                                                      request_type)
+
+        joined = 'username="{}", algorithm="hmac-sha1", headers="date {}'\
+                 'request-line", signature="{}"'\
             .format(username, content_header, hmac_signature)
 
         header_value = "hmac {}".format(joined)
