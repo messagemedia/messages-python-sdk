@@ -8,18 +8,11 @@
 import base64
 import hashlib
 import hmac
-from datetime import datetime
-from time import mktime
-from wsgiref.handlers import format_date_time
-
 from message_media_messages.configuration import Configuration
-
-from message_media_messages.api_helper import APIHelper
-import os
 
 
 class TestConfiguration(object):
-    """A class used for configuring the SDK by a user.
+    """A class used for configuring the sendMessageTests by a user.
 
     This class need not be instantiated and all properties and methods
     are accessible without instance creation.
