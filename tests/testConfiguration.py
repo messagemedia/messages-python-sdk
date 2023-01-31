@@ -36,7 +36,7 @@ class TestConfiguration(object):
         return header_value
 
     def create_signature(date, content_signature, url, request_type):
-        signing_string = "date: {}\n{}{} {} HTTP/1.1" \
+        signing_string = "date: {}\n{}{} {} HTTP/1.1"\
             .format(date, content_signature, request_type, url)
 
         hashed = hmac.new(Configuration.hmac_auth_password.encode("utf-8"),

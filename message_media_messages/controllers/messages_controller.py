@@ -15,9 +15,10 @@ from message_media_messages.models.send_messages_response import SendMessagesRes
 from message_media_messages.exceptions.api_exception import APIException
 from message_media_messages.exceptions.send_messages_400_response_exception import SendMessages400ResponseException
 
-
 class MessagesController(BaseController):
+
     """A Controller to access Endpoints in the message_media_messages API."""
+
 
     def get_message_status(self,
                            message_id):
@@ -248,8 +249,7 @@ class MessagesController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _context.response.status_code == 400:
-            raise SendMessages400ResponseException('Unexpected error in API call. See HTTP response body for details.',
-                                                   _context)
+            raise SendMessages400ResponseException('Unexpected error in API call. See HTTP response body for details.', _context)
         self.validate_response(_context)
 
         # Return appropriate type

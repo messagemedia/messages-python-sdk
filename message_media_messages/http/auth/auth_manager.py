@@ -30,7 +30,7 @@ class AuthManager:
         """
 
         if Configuration.hmac_auth_user_name is not None and \
-                Configuration.hmac_auth_password is not None:
+            Configuration.hmac_auth_password is not None:
             AuthManager.apply_hmac_auth(http_request, url, body)
         else:
             AuthManager.apply_basic_auth(http_request)
@@ -92,7 +92,7 @@ class AuthManager:
                                                       request_type)
 
         joined = 'username="{}", algorithm="hmac-sha1", headers="date {}'\
-                 'request-line", signature="{}"'\
+            'request-line", signature="{}"'\
             .format(username, content_header, hmac_signature)
 
         header_value = "hmac {}".format(joined)
@@ -100,7 +100,7 @@ class AuthManager:
 
     @staticmethod
     def create_signature(date, content_signature, url, request_type):
-        signing_string = "date: {}\n{}{} {} HTTP/1.1" \
+        signing_string = "date: {}\n{}{} {} HTTP/1.1"\
             .format(date, content_signature, request_type, url)
 
         hashed = hmac.new(Configuration.hmac_auth_password.encode("utf-8"),
