@@ -36,8 +36,8 @@ class Configuration(object):
 
     # The username to use with HMAC authentication
     # TODO: Set an appropriate value
-    hmac_auth_user_name = os.environ.get('AUTHUSERNAME')
+    hmac_auth_user_name = 'FxJMSlsivOoHAjDbWcO7'
 
     # The password to use with HMAC authentication
     # TODO: Set an appropriate value
-    hmac_auth_password = os.environ.get('AUTHPASSWORD')
+    hmac_auth_password = 'HbR3jfA1b0J3AHVmPajTWuGGaDIsk4'
