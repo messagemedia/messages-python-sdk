@@ -15,10 +15,9 @@ from message_media_messages.models.send_messages_response import SendMessagesRes
 from message_media_messages.exceptions.api_exception import APIException
 from message_media_messages.exceptions.send_messages_400_response_exception import SendMessages400ResponseException
 
+
 class MessagesController(BaseController):
-
     """A Controller to access Endpoints in the message_media_messages API."""
-
 
     def get_message_status(self,
                            message_id):
@@ -72,7 +71,7 @@ class MessagesController(BaseController):
 
         # Prepare query URL
         _url_path = '/v1/messages/{messageId}'
-        _url_path = APIHelper.append_url_with_template_parameters(_url_path, { 
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
             'messageId': message_id
         })
         _query_builder = Configuration.base_uri
@@ -97,7 +96,6 @@ class MessagesController(BaseController):
         # Return appropriate type
         return APIHelper.json_deserialize(_context.response.raw_body, GetMessageStatusResponse.from_dictionary)
 
-#Method to be tested
     def send_messages(self,
                       body):
         """Does a POST request to /v1/messages.
@@ -250,7 +248,8 @@ class MessagesController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _context.response.status_code == 400:
-            raise SendMessages400ResponseException('Unexpected error in API call. See HTTP response body for details.', _context)
+            raise SendMessages400ResponseException('Unexpected error in API call. See HTTP response body for details.',
+                                                   _context)
         self.validate_response(_context)
 
         # Return appropriate type
@@ -300,7 +299,7 @@ class MessagesController(BaseController):
 
         # Prepare query URL
         _url_path = '/v1/messages/{messageId}'
-        _url_path = APIHelper.append_url_with_template_parameters(_url_path, { 
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
             'messageId': message_id
         })
         _query_builder = Configuration.base_uri

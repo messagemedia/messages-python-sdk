@@ -40,36 +40,40 @@ class Test_MM_send_message(unittest.TestCase):
     def test_MD5_content_hash_equivalent_to_body(self):
         http = urllib3.PoolManager()
         body = APIHelper.json_serialize(self.__class__.body)
-        MD5 = self.__class__.content_hash
+        request_header = self.__class__._headers
+        md5 = self.__class__.content_hash
+        query_url = self.__class__._query_url
 
         _request = http.request(
             'POST',
-            self.__class__._query_url,
+            self.query_url,
             body=body,
-            headers=self.__class__._headers
+            headers=request_header
         )
 
-        AuthManager.apply_hmac_auth(_request, self.__class__._query_url, body)
+        AuthManager.apply_hmac_auth(_request, query_url, body)
         requestMD5 = _request.getheader('x-Content-MD5')
-        assert MD5 == requestMD5
+        assert md5 == requestMD5
 
     # Testing HMAC Auth is appropriate
     def test_AUTH_is_same_as_request(self):
         http = urllib3.PoolManager()
         body = APIHelper.json_serialize(self.__class__.body)
         date_header = self.__class__.date_header
-        MD5 = self.__class__.content_hash
+        request_header = self.__class__._headers
+        md5 = self.__class__.content_hash
+        query_url = self.__class__._query_url
 
-        hmac_auth = TestConfiguration.create_auth(self.__class__._query_url, 'POST', date_header,
-                                                  MD5)
+        hmac_auth = TestConfiguration.create_auth(query_url, 'POST', date_header,
+                                                  md5)
         _request = http.request(
             'POST',
-            self.__class__._query_url,
+            query_url,
             body=body,
-            headers=self.__class__._headers
+            headers=request_header
         )
 
-        AuthManager.apply_hmac_auth(_request, self.__class__._query_url, body)
+        AuthManager.apply_hmac_auth(_request, query_url, body)
         request_authorization = _request.getheader('Authorization')
         assert request_authorization == hmac_auth
 
@@ -91,7 +95,7 @@ class Test_MM_send_message(unittest.TestCase):
     # Testing get message endpoint
     def test_get_message_endpoint(self):
         actual_id = 'Enter Your Id'
-        use_hmac_authentication = True
+        use_hmac_authentication = False
 
         client = MessageMediaMessagesClient(use_hmac_authentication)
         messages_controller = client.messages
