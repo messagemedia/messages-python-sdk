@@ -55,7 +55,7 @@ class TestAuthorization(unittest.TestCase):
         cls.date_header = format_date_time(stamp)
 
         cls.content_signature = "x-Content-MD5: {}\n".format(cls.content_hash)
-        cls.expected_signature = TestConfiguration.create_signature(cls.date_header, cls.content_signature,
+        cls.expected_signature = TestUtility.create_signature(cls.date_header, cls.content_signature,
                                                                     cls._query_url, 'POST', True)
 
     def test_post_request_authorization_values_are_appropriate(self):
@@ -66,7 +66,7 @@ class TestAuthorization(unittest.TestCase):
         md5 = self.__class__.content_hash
         query_url = self.__class__._query_url
         content_signature = "x-Content-MD5: {}\n".format(md5)
-        expected_username = 'hmac username="FxJMSlsivOoHAjDbWcO7"'
+        expected_username = 'hmac username=""'
         expected_algorithm = ' algorithm="hmac-sha1"'
         expected_header = ' headers="date x-Content-MD5 request-line"'
         expected_signature = TestUtility.create_signature(date_header, content_signature, query_url, 'POST', True)

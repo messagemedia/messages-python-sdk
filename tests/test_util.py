@@ -43,14 +43,3 @@ class TestUtility(object):
 
         return body
 
-    @staticmethod
-    def create_url(message_id):
-        _url_path = '/v1/messages/{messageId}'
-        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'messageId': message_id
-        })
-        _query_builder = Configuration.base_uri
-        _query_builder += _url_path
-        _query_url = APIHelper.clean_url(_query_builder)
-
-        return _query_url
