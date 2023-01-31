@@ -6,31 +6,19 @@
     This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 
-import hashlib
 import unittest
-from datetime import datetime
-from time import mktime
-from wsgiref.handlers import format_date_time
 from message_media_messages.exceptions.api_exception import APIException
-from tests.testConfiguration import TestConfiguration
-from message_media_messages.http.auth.auth_manager import AuthManager
-from message_media_messages.configuration import Configuration
-from message_media_messages.api_helper import APIHelper
+from tests.test_util import TestUtility
 from message_media_messages.message_media_messages_client import MessageMediaMessagesClient
-from message_media_messages.models.send_messages_request import SendMessagesRequest
-from message_media_messages.models.message import Message
-from message_media_messages.models.format_enum import FormatEnum
-import urllib3
 
 
-class Test_MM_send_message(unittest.TestCase):
-    """@classmethod
-    def setUpClass(cls):"""
+
+class TestMessages(unittest.TestCase):
 
     # Testing successful message to MM endpoint
     def test_successful_message_to_endpoint(self):
         use_hmac_authentication = True
-        body = TestConfiguration.create_body()
+        body = TestUtility.create_body()
 
         client = MessageMediaMessagesClient(use_hmac_authentication)
         messages_controller = client.messages
@@ -44,7 +32,7 @@ class Test_MM_send_message(unittest.TestCase):
         auth_user_name = 'Rubbish'
         auth_password = 'Random'
         use_hmac_authentication = True
-        body = TestConfiguration.create_body()
+        body = TestUtility.create_body()
 
         client = MessageMediaMessagesClient(auth_user_name, auth_password, use_hmac_authentication)
         messages_controller = client.messages

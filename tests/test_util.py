@@ -16,33 +16,12 @@ from message_media_messages.models.message import Message
 from message_media_messages.models.send_messages_request import SendMessagesRequest
 
 
-class TestConfiguration(object):
-    """A class used for configuring the sendMessageTests by a user.
+class TestUtility(object):
 
-    This class need not be instantiated and all properties and methods
-    are accessible without instance creation.
-
-    """
-
-    """def create_auth(url, request_type, date_header, content_hash):
-        content_header = "x-Content-MD5 "
-        content_signature = "x-Content-MD5: {}\n".format(content_hash)
-
-        hmac_signature = TestConfiguration.create_signature(date_header,
-                                                            content_signature,
-                                                            url,
-                                                            request_type)
-
-        joined = 'username="{}", algorithm="hmac-sha1", headers="date {}'\
-                 'request-line", signature="{}"'\
-            .format(Configuration.hmac_auth_user_name, content_header, hmac_signature)
-
-        header_value = "hmac {}".format(joined)
-        return header_value"""
     @staticmethod
     def create_signature(date, content_signature, url, request_type, wrapper=None):
         signature = ' signature="'
-        signing_string = "date: {}\n{}{} {} HTTP/1.1"\
+        signing_string = "date: {}\n{}{} {} HTTP/1.1" \
             .format(date, content_signature, request_type, url)
 
         hashed = hmac.new(Configuration.hmac_auth_password.encode("utf-8"),
@@ -59,7 +38,7 @@ class TestConfiguration(object):
         body.messages = []
         body.messages.append(Message())
         body.messages[0].content = 'My tests message'
-        body.messages[0].destination_number = '+My Number'
+        body.messages[0].destination_number = '+61452549798'
         body.messages[0].format = FormatEnum.SMS
 
         return body
