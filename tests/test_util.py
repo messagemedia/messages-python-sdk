@@ -9,7 +9,6 @@ import base64
 import hashlib
 import hmac
 
-from message_media_messages.api_helper import APIHelper
 from message_media_messages.configuration import Configuration
 from message_media_messages.models.format_enum import FormatEnum
 from message_media_messages.models.message import Message
@@ -21,7 +20,7 @@ class TestUtility(object):
     @staticmethod
     def create_signature(date, content_signature, url, request_type, wrapper=None):
         signature = ' signature="'
-        signing_string = "date: {}\n{}{} {} HTTP/1.1" \
+        signing_string = "date: {}\n{}{} {} HTTP/1.1"\
             .format(date, content_signature, request_type, url)
 
         hashed = hmac.new(Configuration.hmac_auth_password.encode("utf-8"),
@@ -38,7 +37,7 @@ class TestUtility(object):
         body.messages = []
         body.messages.append(Message())
         body.messages[0].content = 'My tests message'
-        body.messages[0].destination_number = '+61452549798'
+        body.messages[0].destination_number = '{}'
         body.messages[0].format = FormatEnum.SMS
 
         return body

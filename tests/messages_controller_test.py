@@ -12,8 +12,7 @@ from tests.test_util import TestUtility
 from message_media_messages.message_media_messages_client import MessageMediaMessagesClient
 
 
-
-class TestMessages(unittest.TestCase):
+class MessagesControllerTest(unittest.TestCase):
 
     # Testing successful message to MM endpoint
     def test_successful_message_to_endpoint(self):
@@ -24,13 +23,12 @@ class TestMessages(unittest.TestCase):
         messages_controller = client.messages
 
         result = messages_controller.send_messages(body)
-
         self.assertIsNotNone(result)
 
     # Testing unsupported request raises exception
     def test_unsuccessful_request_raises_exception(self):
-        auth_user_name = 'Rubbish'
-        auth_password = 'Random'
+        auth_user_name = '{}'
+        auth_password = '{}'
         use_hmac_authentication = True
         body = TestUtility.create_body()
 
@@ -43,8 +41,8 @@ class TestMessages(unittest.TestCase):
         self.assertIsNotNone(raised_exception)
 
     # Testing get message endpoint
-    def test_get_message_endpoint(self):
-        actual_id = 'Enter Your Id'
+    def test_successful_get_message_to_endpoint(self):
+        actual_id = '{}'
         use_hmac_authentication = True
 
         client = MessageMediaMessagesClient(use_hmac_authentication)
