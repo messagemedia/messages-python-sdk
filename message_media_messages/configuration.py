@@ -11,7 +11,6 @@ import os
 
 
 class Configuration(object):
-
     """A class used for configuring the SDK by a user.
 
     This class need not be instantiated and all properties and methods
@@ -36,8 +35,10 @@ class Configuration(object):
 
     # The username to use with HMAC authentication
     # TODO: Set an appropriate value
-    hmac_auth_user_name = os.environ.get('AUTHUSERNAME')
+    hmac_auth_user_name = 'FxJMSlsivOoHAjDbWcO7'
+        #os.environ.get('AUTH_USERNAME')
 
     # The password to use with HMAC authentication
     # TODO: Set an appropriate value
-    hmac_auth_password = os.environ.get('AUTHPASSWORD')
+    hmac_auth_password = 'HbR3jfA1b0J3AHVmPajTWuGGaDIsk4'
+        #os.environ.get('PASSWORD')

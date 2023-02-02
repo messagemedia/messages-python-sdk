@@ -11,6 +11,8 @@ import unittest
 from datetime import datetime
 from time import mktime
 from wsgiref.handlers import format_date_time
+
+from tests.test_configuration import TestConfiguration
 from tests.test_util import TestUtility
 from message_media_messages.http.auth.auth_manager import AuthManager
 from message_media_messages.configuration import Configuration
@@ -27,7 +29,7 @@ class AuthManagerTests(unittest.TestCase):
     body.messages = []
     body.messages.append(Message())
     body.messages[0].content = 'My tests message'
-    body.messages[0].destination_number = '{}'
+    body.messages[0].destination_number = '{}'.format(TestConfiguration.request_dest_number)
     body.messages[0].format = FormatEnum.SMS
 
     _url_path = '/v1/messages'
@@ -51,7 +53,7 @@ class AuthManagerTests(unittest.TestCase):
     content_signature = "x-Content-MD5: {}\n".format(content_hash)
     get_content_signature = ""
 
-    def test_post_request_authorization_header_values_are_appropriate(self):
+    def test_post_request_hmac_authorization_header_values_are_appropriate(self):
         date_header, expected_algorithm, expected_username, http, query_url, request_header = self.header_setup()
         body = APIHelper.json_serialize(self.body)
         content_signature = self.content_signature
@@ -71,7 +73,7 @@ class AuthManagerTests(unittest.TestCase):
         self.assert_cases(algorithm, expected_algorithm, expected_header, expected_signature, expected_username,
                           header, signature, username)
 
-    def test_md5_content_hash_equivalent_to_body(self):
+    def test_post_request_content_md5_is_equivalent_to_md5_hash_of_request_body(self):
         http = urllib3.PoolManager()
         body = APIHelper.json_serialize(self.body)
         md5 = self.content_hash
@@ -89,7 +91,7 @@ class AuthManagerTests(unittest.TestCase):
         requestMD5 = _request.getheader('x-Content-MD5')
         assert md5 == requestMD5
 
-    def test_get_request_authorization_header_values_are_appropriate(self):
+    def test_get_request_hmac_authorization_header_values_are_appropriate(self):
         date_header, expected_algorithm, expected_username, http, query_url, request_header = self.header_setup()
         content_signature = ""
         expected_header = ' headers="date request-line"'
@@ -112,7 +114,7 @@ class AuthManagerTests(unittest.TestCase):
         date_header = self.date_header
         request_header = self._headers
         query_url = self._query_url
-        expected_username = 'hmac username="{}"'
+        expected_username = 'hmac username="{}"'.format(Configuration.hmac_auth_user_name)
         expected_algorithm = ' algorithm="hmac-sha1"'
         return date_header, expected_algorithm, expected_username, http, query_url, request_header
 
