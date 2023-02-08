@@ -1,22 +1,13 @@
 # -*- coding: utf-8 -*-
 
-"""
-    message_media_messages
-
-    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
-"""
 import base64
 import hashlib
 import hmac
 
 from message_media_messages.configuration import Configuration
-from message_media_messages.models.format_enum import FormatEnum
-from message_media_messages.models.message import Message
-from message_media_messages.models.send_messages_request import SendMessagesRequest
-from tests.test_configuration import TestConfiguration
 
 
-class TestUtility(object):
+class TestUtil(object):
 
     @staticmethod
     def create_signature(date, content_signature, url, request_type, wrapper=None):
@@ -32,14 +23,5 @@ class TestUtility(object):
         else:
             return base64.b64encode(hashed.digest()).decode('utf-8')
 
-    @staticmethod
-    def create_body():
-        body = SendMessagesRequest()
-        body.messages = []
-        body.messages.append(Message())
-        body.messages[0].content = 'My tests message'
-        body.messages[0].destination_number = '{}'.format(TestConfiguration.request_dest_number)
-        body.messages[0].format = FormatEnum.SMS
 
-        return body
 

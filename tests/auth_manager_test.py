@@ -1,127 +1,103 @@
 # -*- coding: utf-8 -*-
 
-"""
-    message_media_messages
-
-    This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
-"""
-
 import hashlib
 import unittest
-from datetime import datetime
-from time import mktime
-from wsgiref.handlers import format_date_time
 
-from tests.test_configuration import TestConfiguration
-from tests.test_util import TestUtility
-from message_media_messages.http.auth.auth_manager import AuthManager
-from message_media_messages.configuration import Configuration
+from freezegun import freeze_time
+
 from message_media_messages.api_helper import APIHelper
-from message_media_messages.models.send_messages_request import SendMessagesRequest
-from message_media_messages.models.message import Message
+from message_media_messages.configuration import Configuration
+from message_media_messages.http.auth.auth_manager import AuthManager
+from message_media_messages.http.requests_client import RequestsClient
 from message_media_messages.models.format_enum import FormatEnum
-import urllib3
+from message_media_messages.models.message import Message
+from message_media_messages.models.send_messages_request import SendMessagesRequest
+from tests.test_util import TestUtil
 
 
-class AuthManagerTests(unittest.TestCase):
+class AuthManagerTest(unittest.TestCase):
 
-    body = SendMessagesRequest()
-    body.messages = []
-    body.messages.append(Message())
-    body.messages[0].content = 'My tests message'
-    body.messages[0].destination_number = '{}'.format(TestConfiguration.request_dest_number)
-    body.messages[0].format = FormatEnum.SMS
+    def __init__(self, method_name: str = ...):
+        super().__init__(method_name)
+        self.content_hash = None
+        self.query_url = None
+        self.send_message_request = None
 
-    _url_path = '/v1/messages'
-    _query_builder = Configuration.base_uri
-    _query_builder += _url_path
-    _query_url = APIHelper.clean_url(_query_builder)
+    def setUp(self):
+        self.send_message_request = self.get_send_message_request()
+        self.query_url = APIHelper.clean_url(Configuration.base_uri + '/v1/messages')
+        self.content_hash = self.get_content_hash(self.send_message_request)
+        self.content_md5_header = "x-Content-MD5: {}\n".format(self.content_hash)
+        self.date_header = 'Wed, 08 Feb 2023 03:00:00 GMT'
+        self.expected_algorithm = ' algorithm="hmac-sha1"'
+        Configuration.hmac_auth_user_name = "some_user_name"
+        self.expected_username = "hmac username=\"" + Configuration.hmac_auth_user_name + "\""
 
-    _headers = {
-        'accept': 'application/json',
-        'Content-Type': 'application/json; charset=utf-8',
-    }
-
-    m = hashlib.md5()
-    m.update(bytes(APIHelper.json_serialize(body), 'utf-8'))
-    content_hash = m.hexdigest()
-
-    now = datetime.now()
-    stamp = mktime(now.timetuple())
-    date_header = format_date_time(stamp)
-
-    content_signature = "x-Content-MD5: {}\n".format(content_hash)
-    get_content_signature = ""
-
+    @freeze_time("2023-02-08 14:00:00")
     def test_post_request_hmac_authorization_header_values_are_appropriate(self):
-        date_header, expected_algorithm, expected_username, http, query_url, request_header = self.header_setup()
-        body = APIHelper.json_serialize(self.body)
-        content_signature = self.content_signature
-        expected_header = ' headers="date x-Content-MD5 request-line"'
-        expected_signature = TestUtility.create_signature(date_header, content_signature, query_url, 'POST', True)
+        body = APIHelper.json_serialize(self.send_message_request)
 
-        _request = http.request(
-            'POST',
-            query_url,
-            body=body,
-            headers=request_header
+        request = RequestsClient().post(
+            query_url=self.query_url,
+            parameters=body,
+            headers={}
         )
 
-        AuthManager.apply_hmac_auth(_request, query_url, body)
-        username, algorithm, header, signature = _request.getheader('Authorization').split(',')
+        AuthManager.apply_hmac_auth(request, self.query_url, body)
 
-        self.assert_cases(algorithm, expected_algorithm, expected_header, expected_signature, expected_username,
-                          header, signature, username)
+        expected_headers_property = ' headers="date x-Content-MD5 request-line"'
+        expected_signature = TestUtil.create_signature(self.date_header, self.content_md5_header,
+                                                       self.query_url, 'POST', True)
+        self.assert_auth_header(request, expected_headers_property, expected_signature)
 
-    def test_post_request_content_md5_is_equivalent_to_md5_hash_of_request_body(self):
-        http = urllib3.PoolManager()
-        body = APIHelper.json_serialize(self.body)
-        md5 = self.content_hash
-        query_url = self._query_url
-        request_header = self._headers
+    def test_post_request_content_md5_is_md5_of_request_body(self):
+        body = APIHelper.json_serialize(self.send_message_request)
 
-        _request = http.request(
-            'POST',
-            query_url,
-            body=body,
-            headers=request_header
+        request = RequestsClient().post(
+            query_url=self.query_url,
+            parameters=body,
+            headers={}
         )
 
-        AuthManager.apply_hmac_auth(_request, query_url, body)
-        requestMD5 = _request.getheader('x-Content-MD5')
-        assert md5 == requestMD5
+        AuthManager.apply_hmac_auth(request, self.query_url, body)
+        request_md5 = request.headers['x-Content-MD5']
+        assert self.content_hash == request_md5
 
+    @freeze_time("2023-02-08 14:00:00")
     def test_get_request_hmac_authorization_header_values_are_appropriate(self):
-        date_header, expected_algorithm, expected_username, http, query_url, request_header = self.header_setup()
-        content_signature = ""
-        expected_header = ' headers="date request-line"'
-        expected_signature = TestUtility.create_signature(date_header, content_signature, query_url, 'GET', True)
-
-        _request = http.request(
-            'GET',
-            query_url,
-            headers=request_header
+        request = RequestsClient().get(
+            query_url=self.query_url,
+            headers={}
         )
 
-        AuthManager.apply_hmac_auth(_request, query_url)
-        username, algorithm, header, signature = _request.getheader('Authorization').split(',')
+        AuthManager.apply_hmac_auth(request, self.query_url)
 
-        self.assert_cases(algorithm, expected_algorithm, expected_header, expected_signature, expected_username,
-                          header, signature, username)
+        expected_headers_property = ' headers="date request-line"'
+        expected_signature = TestUtil.create_signature(self.date_header, "",
+                                                       self.query_url, 'GET', True)
+        self.assert_auth_header(request, expected_headers_property, expected_signature)
 
-    def header_setup(self):
-        http = urllib3.PoolManager()
-        date_header = self.date_header
-        request_header = self._headers
-        query_url = self._query_url
-        expected_username = 'hmac username="{}"'.format(Configuration.hmac_auth_user_name)
-        expected_algorithm = ' algorithm="hmac-sha1"'
-        return date_header, expected_algorithm, expected_username, http, query_url, request_header
-
-    def assert_cases(self, algorithm, expected_algorithm, expected_header, expected_signature, expected_username,
-                     header, signature, username):
+    def assert_auth_header(self, request, expected_headers_property, expected_signature):
+        username, algorithm, headers, signature = request.headers['Authorization'].split(',')
         with self.subTest():
-            self.assertEqual(expected_username, username)
-            self.assertEqual(expected_header, header)
-            self.assertEqual(expected_algorithm, algorithm)
+            self.assertEqual(self.expected_username, username)
+            self.assertEqual(expected_headers_property, headers)
+            self.assertEqual(self.expected_algorithm, algorithm)
             self.assertEqual(expected_signature, signature)
+
+    @staticmethod
+    def get_send_message_request():
+        send_message_request = SendMessagesRequest()
+        send_message_request.messages = []
+        send_message_request.messages.append(Message())
+        send_message_request.messages[0].content = 'My tests message'
+        send_message_request.messages[0].destination_number = '+61491570006'
+        send_message_request.messages[0].format = FormatEnum.SMS
+        return send_message_request
+
+    @staticmethod
+    def get_content_hash(request):
+        m = hashlib.md5()
+        m.update(bytes(APIHelper.json_serialize(request), 'utf-8'))
+        content_hash = m.hexdigest()
+        return content_hash
