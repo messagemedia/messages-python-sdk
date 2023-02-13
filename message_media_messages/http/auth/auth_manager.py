@@ -78,6 +78,7 @@ class AuthManager:
         if body is not None:
             request_type = "POST"
             m = hashlib.md5()
+            m.update(bytes(body, 'utf-8'))
             content_hash = m.hexdigest()
             content_signature = "x-Content-MD5: {}\n".format(content_hash)
             content_header = "x-Content-MD5 "

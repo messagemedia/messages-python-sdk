@@ -6,11 +6,8 @@
     This file was automatically generated for MessageMedia by APIMATIC v2.0 ( https://apimatic.io ).
 """
 
-from message_media_messages.api_helper import APIHelper
-
 
 class Configuration(object):
-
     """A class used for configuring the SDK by a user.
 
     This class need not be instantiated and all properties and methods
@@ -35,8 +32,9 @@ class Configuration(object):
 
     # The username to use with HMAC authentication
     # TODO: Set an appropriate value
-    hmac_auth_user_name = None
+    hmac_auth_user_name = 'TODO: Replace'
 
     # The password to use with HMAC authentication
     # TODO: Set an appropriate value
-    hmac_auth_password = None
+    hmac_auth_password = 'TODO: Replace'
+

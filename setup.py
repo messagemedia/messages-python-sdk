@@ -8,7 +8,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='messagemedia-messages-sdk',
-    version='2.1.0',
+    version='2.1.1',
     description='The MessageMedia Messages API provides a number of endpoints for building powerful two-way messaging applications.',
     long_description_content_type="text/markdown",
     long_description=long_description,
@@ -17,9 +17,12 @@ setup(
     url='https://developers.messagemedia.com',
     packages=find_packages(),
     install_requires=[
-        'requests>=2.9.1, <3.0',
-        'jsonpickle>=0.7.1, <1.0',
-        'cachecontrol>=0.11.7, <1.0',
-        'python-dateutil>=2.5.3, <3.0'
+        'requests>=2.28.2, <3.0',
+        'jsonpickle>=3.0.1, <4.0',
+        'cachecontrol>=0.12.11, <1.0',
+        'python-dateutil>=2.8.2, <3.0',
+        'responses>=0.22.0, <1.0',
+        'urllib3>=1.26.14, <2.0',
+        'setuptools>=67.2.0, <68'
     ]
 )
