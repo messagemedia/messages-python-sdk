@@ -28,11 +28,19 @@ class AuthManager:
             body (str): The body of the request. None for GET requests.
 
         """
+        print("Applying authentication...")
+        print("HTTP request:", http_request)
+        print("URL:", url)
+        print("Body:", body)
 
         if Configuration.hmac_auth_user_name is not None and \
             Configuration.hmac_auth_password is not None:
+            print("Updated HMAC Auth User Name:", Configuration.hmac_auth_user_name)
+            print("Updated HMAC Auth Password:", Configuration.hmac_auth_password)
             AuthManager.apply_hmac_auth(http_request, url, body)
         else:
+            print("updated Basic Auth User Name:", Configuration.basic_auth_user_name)
+            print("updated Basic Auth Password:", Configuration.basic_auth_password)
             AuthManager.apply_basic_auth(http_request)
 
     @staticmethod
