@@ -13,7 +13,6 @@ from message_media_messages.controllers.delivery_reports_controller import Deliv
 from message_media_messages.controllers.replies_controller import RepliesController
 
 
-
 class MessageMediaMessagesClient(object):
 
     config = Configuration
@@ -35,20 +34,10 @@ class MessageMediaMessagesClient(object):
                  auth_user_name=None,
                  auth_password=None,
                  use_hmac_authentication=False):
-        print("Initializing MessageMediaMessagesClient...")
-        print("Auth User Name:", auth_user_name)
-        print("Auth Password:", auth_password)
-        print("Use HMAC Authentication:", use_hmac_authentication)
         if use_hmac_authentication:
             Configuration.hmac_auth_user_name = auth_user_name
             Configuration.hmac_auth_password = auth_password
         else:
             Configuration.basic_auth_user_name = auth_user_name
             Configuration.basic_auth_password = auth_password
-
-        print("HMAC Auth User Name (post-init):", Configuration.hmac_auth_user_name)
-        print("HMAC Auth Password (post-init):", Configuration.hmac_auth_password)
-        print("Basic Auth User Name (post-init):", Configuration.basic_auth_user_name)
-        print("Basic Auth Password (post-init):", Configuration.basic_auth_password)
-
 
