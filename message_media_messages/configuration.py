@@ -24,17 +24,17 @@ class Configuration(object):
 
     # The username to use with basic authentication
     # TODO: Set an appropriate value
-    basic_auth_user_name = 'TODO: Replace'
+    basic_auth_user_name = None
 
     # The password to use with basic authentication
     # TODO: Set an appropriate value
-    basic_auth_password = 'TODO: Replace'
+    basic_auth_password = None
 
     # The username to use with HMAC authentication
     # TODO: Set an appropriate value
-    hmac_auth_user_name = 'TODO: Replace'
+    hmac_auth_user_name = None
 
     # The password to use with HMAC authentication
     # TODO: Set an appropriate value
-    hmac_auth_password = 'TODO: Replace'
+    hmac_auth_password = None
 

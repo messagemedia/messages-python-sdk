@@ -41,4 +41,3 @@ class MessageMediaMessagesClient(object):
             Configuration.basic_auth_user_name = auth_user_name
             Configuration.basic_auth_password = auth_password
 
-
